@@ -25,172 +25,65 @@ class CartController extends Controller
         return number_format($floatNumber, 0, ',', '.') . ' ₫';
     }
 
-    public function addToCart(Request $request){
+    public function addService(Request $request) {
+        // Tìm sản phẩm theo ID
         $product = Product::with('product_images')->find($request->id);
-
-        if($product == null){
-            return response()->json([
-                'status' => false,
-                'message' => 'Not found'
-            ]);
-        }
-
-        if(Cart::count() > 0){
-           
-            $cartContent = Cart::content();
-            $productExist = false;
-
-            foreach ($cartContent as $item){
-                if($item->id == $product->id){
-                    $productExist = true;
-                }
-            }
-
-            if($productExist == false){
-                Cart::add($product->id,  $product->name, 1, $product->price, ['productImage' => (!empty($product->product_images)) ? $product->product_images->first() : '']);
-
-                $status = true;
-                $message = $product->name. 'đã thêm sản phẩm vào giỏ hàng';
-                session()->flash('success', $message);
-
-            }else{
-                return response()->json([
-                    'status' =>  false,
-                    'message' => $product->name.'đã tồn tại trong giỏ hàng'
-                ]);
-            }
-            
-        } else{
-          
-            Cart::add($product->id,  $product->name, 1, $product->price, ['productImage' => (!empty($product->product_images)) ? $product->product_images->first() : '']);
-            $status = true;
-            $message = $product->name.' đã thêm sản phẩm vào giỏ hàng';
-            session()->flash('success', $message);
-        }
-        
-        return response()->json([
-            'status' =>   $status,
-            'message' =>  $message
-        ]);
-
-    }
-
-    public function cart(){
-
-        $cartContent  = Cart::content();
-        // dd( $cartContent);
-        $data['cartContent'] =  $cartContent;
-        
-        return view('user.cart', $data);
-
-    }
-
-    public function updateCart(Request $request){
-        $rowId = $request->rowId;
-        $qty = $request->qty;
-       
-
-        $itemInfo = Cart::get($rowId);
-
-         // kiểm tra số lượng
-        $product = Product::find($itemInfo->id);
-
-        if($product->track_qty == 'Yes'){
-            if($qty <= $product->qty){
-                Cart::update($rowId, $qty);
-                $message = 'cập nhật số lượng sản phẩm thành công';
-                $status = true;
-                session()->flash('success', $message);
-            }else{
-                $message = 'Số lượng trong kho của sản phẩm ' . $product->name . ' chỉ còn ' . $product->qty. ' sản phẩm' ;
-
-                $status = false;
-                
-                session()->flash('error', $message);
-            }
-        }else{
-                Cart::update($rowId, $qty);
-                $message = 'cập nhật số lượng sản phẩm thành công';
-                $status = true;
-                session()->flash('success', $message);
-        }
-
-
     
-        return response()->json([
-            'status' =>  $status,
-            'message' => $message
-        ]);
-    }
-
-    public function deleteItem(Request $request){
-
-        $itemInfo = Cart::get($request->rowId);
-
-        if($itemInfo == null){
-            session()->flash('error', 'Không tồn tại sản phẩm này trong giỏ hàng');
+        // Kiểm tra sản phẩm tồn tại không
+        if ($product == null) {
             return response()->json([
                 'status' => false,
-                'message' => 'Không tồn tại sản phẩm này trong giỏ hàng'
+                'message' => 'Sản phẩm không tồn tại'
             ]);
         }
+    
+        // Xóa toàn bộ giỏ hàng trước khi thêm dịch vụ mới
+        Cart::destroy();  // Xóa tất cả các mục trong giỏ hàng
 
-        Cart::remove($request->rowId);
-        session()->flash('success', 'Đã xóa sản phẩm ra khỏi giỏ hàng');
+        // Thêm sản phẩm vào giỏ hàng
+        Cart::add($product->id, $product->name, 1, $product->price, [
+            'productImage' => (!empty($product->product_images)) ? $product->product_images->first() : ''
+        ]);
+    
+        // Chuyển hướng đến trang thanh toán
         return response()->json([
             'status' => true,
-            'message' =>  'Đã xóa sản phẩm ra khỏi giỏ hàng'
+            'message' => 'Đã thêm dịch vụ'
         ]);
-        
     }
 
-    public function checkout(){
-        
+    public function checkout(Request $request){
+
+    
+
+
+
         $discount = 0;
         
-        if (Cart::count() == 0){ // giỏ hàng rỗng
-            return redirect()->route('user.cart');
-        }
+        // if (Cart::count() == 0){ // giỏ hàng rỗng
+        //     return redirect()->route('user.cart');
+        // }
 
         // chưa đăng nhập
-        if(Auth::check() == false){
+        // if(Auth::check() == false){
 
-            if(!session()->has('url.intended')){
-                session(['url.intended' => url()->current()]); // lưu đường dẫn của trang
-            }
+        //     if(!session()->has('url.intended')){
+        //         session(['url.intended' => url()->current()]); // lưu đường dẫn của trang
+        //     }
+        //     return redirect()->route('user.login');
+        // }
 
-            return redirect()->route('user.login');
-        }
-
-
-        session()->forget('url.intended');
+        // session()->forget('url.intended');
         
-        $userAddress = UserAddress::where('user_id', Auth::user()->id)->first();
+    
+        $grandTotal = Cart::subtotal(2, '.', '');
 
-        // dd($userAddress);
-      
-        if(!empty($userAddress)){
+        
 
-            $totalQty = 0;
-            $ShippingCost = 0;
-            $grandTotal = 0;
-
-            foreach(Cart::content() as $item){
-                $totalQty += $item->qty;
-            }
-
-            
-            $grandTotal = Cart::subtotal(2, '.', '') + $ShippingCost;
-
-        }else{
-
-            $grandTotal = Cart::subtotal(2, '.', '');
-
-        }
         $ShippingCost = 0;
+        
         return view('user.checkout', [
-            'userAddress' => $userAddress,
-            'ShippingCost' =>   formatPriceVND($ShippingCost),
+            'ShippingCost' => formatPriceVND($ShippingCost),
             'grandTotal' =>  formatPriceVND($grandTotal),
             'discount' =>  formatPriceVND($discount)
         ]);

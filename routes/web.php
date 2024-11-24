@@ -60,7 +60,7 @@ Route::get('/shop/{categorySlug?}/{subCategorySlug?}', [ShopController::class, '
 Route::get('/product/{slug}', [ShopController::class, 'product'])->name('user.product');
 // Cart
 Route::get('/cart', [CartController::class, 'cart'])->name('user.cart');
-Route::post('/add-to-cart', [CartController::class, 'addToCart'])->name('user.addToCart');
+Route::post('/add-to-cart', [CartController::class, 'addService'])->name('user.addService');
 Route::post('/add-to-wishlist', [FrontController::class, 'addToWishlist'])->name('user.addToWishlist');
 
 Route::post('/update-cart', [CartController::class, 'updateCart'])->name('user.updateCart');

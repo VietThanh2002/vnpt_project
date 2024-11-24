@@ -38,7 +38,7 @@
             </div>
         </header>
 
-        <header class="header bg-white shadow" style="margin-top: 85px">
+        <header class="header bg-white" style="margin-top: 85px">
             <div class="container">
                 <nav class="navbar navbar-expand-xl" id="navbar">
                     <button class="navbar-toggler menu-btn" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -86,10 +86,10 @@
                                 @endif
                             </ul>
                             </div>
-                            <a href="{{ route('user.cart') }}">
+                            {{-- <a href="{{ route('user.cart') }}">
                                 <i class='bx bx-cart-alt'></i>
                                 <span class="cart-quantity">( {{ Cart::count() }} )</span>
-                            </a>
+                            </a> --}}
                 
                         </div>
                     </div> 		

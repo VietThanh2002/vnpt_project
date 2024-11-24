@@ -13,7 +13,7 @@
                         <div class="card-body checkout-form">
                             <div class="row">
                                 <div class="text-center">
-                                    <p class="fs-3 fw-bold">Thông tin nhận hàng</p>
+                                    <p class="fs-3 fw-bold">Thông tin địa chỉ</p>
                                 </div>
                                 <div class="col-md-4 col-md-12">
                                     <div class="mb-3">
@@ -50,7 +50,7 @@
 
                                 <div class="col-md-4 col-lg-12">
                                     <div class="m-2 p-1">
-                                        <p>Thông tin địa chỉ nhận hàng hiện tại:</p>
+                                        <p>Thông tin địa chỉ lắp đặt:</p>
                                         @if(!empty($userAddress) && !empty($userAddress->ward) && !empty($userAddress->district) && !empty($userAddress->city))
                                             <span class="fw-bold text-dark d-flex justify-content-center">
                                                 {{ $userAddress->ward }} - {{ $userAddress->district }} - {{ $userAddress->city }}
@@ -63,7 +63,7 @@
     
                                 <div class="col-md-12 mt-2">
                                     <div class="mb-3">
-                                        <textarea name="address" id="address" cols="30" rows="3" placeholder="(Số nhà, tên đường)" class="form-control">{{ (!empty($userAddress)) ? $userAddress->address : '' }}</textarea>
+                                        <textarea name="address" id="address" cols="30" rows="3" placeholder="Địa chỉ lắp đặt cụ thể (Số nhà, tên đường)" class="form-control">{{ (!empty($userAddress)) ? $userAddress->address : '' }}</textarea>
                                         <p></p>
                                     </div>            
                                 </div>
@@ -74,11 +74,10 @@
                                         <p></p>
                                     </div>            
                                 </div>
-                                
-    
+                            
                                 <div class="col-md-12">
                                     <div class="mb-3">
-                                        <textarea name="notes" id="notes" cols="30" rows="5" placeholder="Ghi chú nhận hàng (nếu có)" class="form-control"></textarea>
+                                        <textarea name="notes" id="notes" cols="30" rows="5" placeholder="Yêu cầu lắp đặt (nếu có)" class="form-control"></textarea>
                                     </div>            
                                 </div>
     

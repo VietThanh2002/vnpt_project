@@ -146,21 +146,20 @@
     <script>
 
     function addToCart(id){
-                $.ajax({
-                        url: '{{ route("user.addToCart") }}',
-                        type: 'post',
-                        data: {id:id},
-                        dataType: 'json',
-                        success: function(response){
-                            if(response.status == true){
-                                window.location.href = "{{ route('user.cart') }}";
-                            }else{
-                                alert(response.message)
-                            }
-                        } 
-
-                });
-            }
+         $.ajax({
+                 url: '{{ route("user.addService") }}',
+                 type: 'post',
+                 data: {id:id},
+                 dataType: 'json',
+                 success: function(response){
+                     if(response.status == true){
+                        window.location.href = "{{ route('user.checkout') }}";
+                     }else{
+                            alert(response.message)
+                     }
+                 } 
+            });
+        }
         
         rangeSlider = $(".js-range-slider").ionRangeSlider({
             type: "double",
@@ -173,7 +172,7 @@
             // max_postfix: "+",
             postfix: "đ",
             onFinish: function(){
-               apply_filters();
+        apply_filters();
             }
         });
 

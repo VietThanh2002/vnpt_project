@@ -37,7 +37,7 @@
 <section class="section-4 pt-5">
     <div class="container">
         <div class="section-title text-center">
-            <h2>CÁC SẢN PHẨM NỔI BẬC</h2>
+            <h2>DỊCH VỤ NỔi BẬC</h2>
         </div>    
         <div class="row gx-3" style="margin-left: 50px">
             @if ($featuredProducts->isNotEmpty())
@@ -46,7 +46,7 @@
                         $productImage =  $product->product_images->first();
                     @endphp
                     <div class="col-lg-3 col-sm-12 col-md-4 list-group-item me-1 rounded-1">
-                        <a href="javascript:void(0);" onclick="addToWishlist({{ $product->id}})" class="whishlist d-flex justify-content-end m-2"><i class="far fa-heart"></i></a>     
+                        {{-- <a href="javascript:void(0);" onclick="addToWishlist({{ $product->id}})" class="whishlist d-flex justify-content-end m-2"><i class="far fa-heart"></i></a>      --}}
                         <div class="product_img position-relative">
                             <a href="{{ route("user.product", $product->slug) }}" class="product-img">
                                 @if (!empty($productImage->image))
@@ -57,7 +57,6 @@
                             </a>
                         </div>
                         <div class="card-body">
-
                             <div class="product_name">
                                 {{$product->name}}
                             </div>
@@ -69,7 +68,7 @@
                             </div>
                         </div>
                         <div class="text-center">
-                            @if ($product->track_qty == 'Yes')
+                            {{-- @if ($product->track_qty == 'Yes')
                                 @if ($product->qty > 0)
                                     <button class="btn_cart">
                                         <a href="javascript:void(0);" onclick="addToCart( {{ $product->id }});" class="fa-solid fa-cart-shopping text-danger"></a>
@@ -83,7 +82,8 @@
                                 <button class="btn_cart">
                                     <a href="javascript:void(0);" onclick="addToCart( {{ $product->id }});" class="fa-solid fa-cart-shopping text-danger"></a>
                                 </button>
-                            @endif
+                            @endif --}}
+                            <a class="btn border-info" href="{{ route("user.product", $product->slug) }}">Xem chi tiết</a>
                         </div>
                     </div>
                 @endforeach
@@ -91,82 +91,25 @@
         </div>
     </div>
 </section>
-
-<section class="section-4 pt-5">
-    <div class="container">
-        <div class="section-title text-center">
-            <h2>SẢN PHẨM MỚI</h2>
-        </div>    
-        <div class="row gx-3" style="margin-left: 50px">
-            @if ($latestProducts->isNotEmpty())
-                @foreach ($latestProducts as $latestProduct)
-                    @php
-                        $productImage =  $latestProduct->product_images->first();
-                    @endphp
-                    <div class="col-lg-3 col-sm-12 col-md-4 list-group-item me-1 rounded-1">
-                        <a href="javascript:void(0);" onclick="addToWishlist({{ $product->id}})" class="whishlist d-flex justify-content-end m-2"><i class="far fa-heart"></i></a>     
-                        <div class="product_img position-relative">
-                            <a href="{{ route("user.product", $latestProduct->slug) }}" class="product-img">
-                                @if (!empty($productImage->image))
-                                    <img src="{{ asset('/uploads/product/'.$productImage->image) }} " class="img-thumbnail" width="50" > 
-                                @else
-                                    <img src="{{ asset('admin-assets/img/default-150x150.png') }} " class="img-thumbnail" width="50" > 
-                                @endif
-                            </a>
-                        </div>
-                        <div class="card-body">
-
-                            <div class="product_name">
-                                {{$latestProduct->name}}
-                            </div>
-                            <div class="product_price">
-                                <span class="h5 m-2"><strong>{{  formatPriceVND($latestProduct->price) }}</strong></span>
-                            </div>
-                        </div>
-                        <div class="text-center">
-                            @if ($product->track_qty == 'Yes')
-                                @if ($product->qty > 0)
-                                    <button class="btn_cart">
-                                        <a href="javascript:void(0);" onclick="addToCart( {{ $product->id }});" class="fa-solid fa-cart-shopping text-danger"></a>
-                                    </button>
-                                @else
-                                    <p class="text-center">
-                                        Sản phẩm này đã hết hàng
-                                    </p>
-                                @endif
-                            @else
-                                <button class="btn_cart">
-                                    <a href="javascript:void(0);" onclick="addToCart( {{ $product->id }});" class="fa-solid fa-cart-shopping text-danger"></a>
-                                </button>
-                            @endif
-                        </div>
-                    </div>
-                @endforeach
-            @endif              
-        </div>
-    </div>
-</section>
-
 <hr>
 @endsection
 
 @section('js')
     <script>
-            function addToCart(id){
-                $.ajax({
-                        url: '{{ route("user.addToCart") }}',
-                        type: 'post',
-                        data: {id:id},
-                        dataType: 'json',
-                        success: function(response){
-                            if(response.status == true){
-                                window.location.href = "{{ route('user.cart') }}";
-                            }else{
-                                alert(response.message)
-                            }
-                        } 
-
-                });
-            }
+        function addToCart(id){
+            $.ajax({
+                url: '{{ route("user.addService") }}',
+                type: 'post',
+                data: {id:id},
+                dataType: 'json',
+                success: function(response){
+                    if(response.status == true){
+                        window.location.href = "{{ route('user.checkout') }}";
+                    }else{
+                        alert(response.message)
+                    }
+                } 
+            });
+        }
     </script>   
 @endsection
