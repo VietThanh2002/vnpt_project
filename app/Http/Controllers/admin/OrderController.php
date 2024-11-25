@@ -41,21 +41,11 @@ class OrderController extends Controller
                                     ->get();                            // đã được định nghĩa eloquent 
 
         // dd($orderDetail);
-
-         // Lấy thông tin về mã giảm giá
-         $discountAmount = null;
-         $discountCode = $order->discount_code;
  
-         if ($discountCode) {
-             $discount = DiscountCoupon::where('code', $discountCode)->first();
-             $discountAmount = $discount ? $discount->discount_amount : null;
-         }
-
         $data['order'] = $order;
         $data['orderDetail'] = $orderDetail;
 
         return view('admin.orders.orderDetail', $data, [
-            'discountAmount' => $discountAmount
         ]);
     }
 

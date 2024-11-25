@@ -68,10 +68,10 @@
                                                     <td>
                                                         @if ($item->status == 'Chờ xử lý')  
                                                             <span class="badge bg-primary">Chờ xử lý</span>
-                                                        @elseif($item->status == 'Đang vận chuyển') 
-                                                            <span class="badge bg-info">Đang vận chuyển</span>
-														@elseif($item->status == 'Đã giao hàng') 
-															<span class="badge bg-success">Đã giao hàng</span>
+                                                        @elseif($item->status == 'Đã xác nhận') 
+                                                            <span class="badge bg-info">Đã xác nhận</span>
+														@elseif($item->status == 'Đã hoàn thành') 
+															<span class="badge bg-success">Đã hoàn thành</span>
 														@else
 															<span class="badge bg-danger">Đã hủy</span>
 														@endif
@@ -81,11 +81,9 @@
                                                     <td><div class="text-center"><a href="{{ route('orders.detailOrder', $item->id) }}"><i class="fa-regular fa-eye btn btn-sm"></i></a></div></td>
                                                 </tr>
                                             @endforeach
-                                            
                                         @else
-                                            <td colspan="5" class="text-center">Danh mục sản phẩm trống!!</td>
+                                            <td colspan="8" class="text-center">Danh mục sản phẩm trống!!</td>
                                         @endif
-										
 									</tbody>
 								</table>										
 							</div>
@@ -131,7 +129,6 @@
 			"info": false
 		});
 	});
-	//sử dụng thuộc tính data-order trong thẻ <td> của mỗi hàng trong cột giá.
-	// Điều này sẽ cho phép DataTables sắp xếp dữ liệu giá đúng cách dựa trên giá trị thực tế, không phải theo chuỗi.
+
 </script>
 @endsection

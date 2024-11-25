@@ -47,27 +47,12 @@
                                     <select id="Ward"  class="form-control"></select>
                                     <p></p>       
                                 </div>
-
-                                <div class="col-md-4 col-lg-12">
-                                    <div class="m-2 p-1">
-                                        <p>Thông tin địa chỉ lắp đặt:</p>
-                                        @if(!empty($userAddress) && !empty($userAddress->ward) && !empty($userAddress->district) && !empty($userAddress->city))
-                                            <span class="fw-bold text-dark d-flex justify-content-center">
-                                                {{ $userAddress->ward }} - {{ $userAddress->district }} - {{ $userAddress->city }}
-                                            </span>
-                                        @else
-                                            <span class="fw-bold text-dark d-flex justify-content-center">Chưa có !!</span>
-                                        @endif
-                                    </div>
-                                </div>
-    
                                 <div class="col-md-12 mt-2">
                                     <div class="mb-3">
                                         <textarea name="address" id="address" cols="30" rows="3" placeholder="Địa chỉ lắp đặt cụ thể (Số nhà, tên đường)" class="form-control">{{ (!empty($userAddress)) ? $userAddress->address : '' }}</textarea>
                                         <p></p>
                                     </div>            
                                 </div>
-                                
                                 <div class="col-md-12">
                                     <div class="mb-3">
                                         <input type="text" name="mobile" id="mobile" class="form-control" placeholder="Số điện thoại" value="{{ (!empty($userAddress)) ? $userAddress->mobile : '' }}">
@@ -88,46 +73,28 @@
                 <div class="col-md-4">
                     <div class="card cart-summery">
                         <div class="m-2 text-center">
-                            <p class="fs-3 fw-bold">Thông tin giỏ hàng</h3>
+                            <p class="fs-3 fw-bold">Thông tin thanh toán</h3>
                         </div> 
                             <div class="card-body">
                                 @foreach (Cart::content() as $item)
+                                   @if ($item->options->type == 'Dịch vụ di động')
+                                    <div class="ms-5">
+                                        <div class="h6">Số sim: {{ $item->name }}</div><br>
+                                        <div class="h6">Loại thuê bao: {{ $item->options->sim_type }}</div><br>
+                                        <div class="h6">Gía sim: {{  formatPriceVND(($item->price)*($item->qty)) }}</div>
+                                    </div>
+                                   @else
                                     <div class="d-flex justify-content-between">
-                                        <div class="h6">{{ $item->name }} x {{ $item->qty}}</div>
+                                        <div class="h6">{{ $item->name }} / {{ $item->qty}} tháng</div>
                                         <div class="h6">{{  formatPriceVND(($item->price)*($item->qty)) }}</div>
                                     </div>
+                                    @endif
                                 @endforeach
                                 <hr>
-                                <div>
-                                    <div class="input-group apply-coupan mt-4">
-                                        <input type="text" id="discount_code" name="discount_code" placeholder="Mã giảm giá" class="form-control m-1">
-                                        <button id="apply-discount" class="btn btn-primary m-1" type="button">Áp dụng</button>
-                                    </div>
-                                   <div>
-                                   <div>
-                                        @if(Session::has('code'))
-                                            <div class="mt-4">
-                                                <strong>{{ Session::get('code')->code}}</strong>
-                                                <a id="remove_discout" name="remove_discout" class="btn btn-sm btn-danger rounded-circle"><i class="fa fa-times"></i></a>
-                                            </div>
-                                        @endif
-                                        <div class="m-2 p-2" id="discount_message">
-                                            
-                                        </div>
-                                   </div>
-                                </div>
                                 <hr>
                                 <div class="d-flex justify-content-between summery-end">
                                     <div class="h6"><strong>Tạm tính</strong></div>
                                     <div class="h6"><strong>{{ formatPriceVND(Cart::subtotal()) }}</strong></div>
-                                </div>
-                                <div class="d-flex justify-content-between mt-2">
-                                    <div class="h6"><strong>Giảm giá</strong></div>
-                                    <div class="h6"><strong id="discount_value">{{ $discount }}</strong></div>
-                                </div>
-                                <div class="d-flex justify-content-between mt-2">
-                                    <div class="h6"><strong>Phí lắp đặt</strong></div>
-                                    <div class="h6"><strong id="shippingFee">{{ $ShippingCost }}</strong></div>
                                 </div>
                                 <hr>
                                 <div class="d-flex justify-content-between mt-2 summery-end">
@@ -136,28 +103,26 @@
                                 </div>                                 
                             </div>
                         </div>
-                    </div>
-                    <div class="card payment-form mt-3 p-1" id="card-payment-form">                        
-                        <h3 class="card-title h5 mb-3">Phương thức thanh toán</h3>
-                        <div class="card-body p-0">
-                            <div class="form-check">
-                                <input class="form-check-input" value="Thanh toán khi nhận hàng" type="radio" name="payment_method" id="payment_method_1"  checked>
-                                <label class="form-check-label" for="payment_method_1">
-                                    Thanh toán khi nhận hàng (COD)
-                                </label>
-                            </div>
-                            {{-- <a href="{{ url('payment-online') }}">
+                        <div class="card payment-form mt-3 p-1" id="card-payment-form">                        
+                            <h3 class="card-title h5 mb-3">Phương thức thanh toán</h3>
+                            <div class="card-body p-0">
                                 <div class="form-check">
-                                    <input class="form-check-input" value="Thanh toán online" type="radio" name="payment_method" id="payment_method_2">
-                                    <label class="form-check-label" for="payment_method_2">
-                                    Thanh toán online (Ví VNpay)
+                                    <input class="form-check-input" value="Thanh toán tại nhà" type="radio" name="payment_method" id="payment_method_1" checked>
+                                    <label class="form-check-label" for="payment_method_1">
+                                        Thanh toán tại nhà
                                     </label>
                                 </div>
-                            </a> --}}
-                            <div class="col-12 pt-4 m-2 text-center">
-                                <button type="submit" class="btn-danger btn btn-block border rounded-5 w-25">Đặt hàng</button>
-                            </div>
-                        </div>                        
+                                <div class="form-check">
+                                    <input class="form-check-input" value="Thanh toán tại cửa hàng" type="radio" name="payment_method" id="payment_method_2">
+                                    <label class="form-check-label" for="payment_method_2">
+                                        Thanh toán tại cửa hàng
+                                    </label>
+                                </div>                                
+                                <div class="col-12 pt-4 m-2 text-center">
+                                    <button type="submit" class="btn-danger btn btn-block border rounded-5 w-50">Xác nhận đặt dịch vụ</button>
+                                </div>
+                            </div>                        
+                        </div>
                     </div>
                 </div>
             </div>
@@ -193,7 +158,6 @@
 
                 success: function (response) {
                     if (response["status"] == true) {
-
                         // $("button[type=submit]").prop('disabled', false);
                         $('#name').removeClass('is-invalid').siblings('p').removeClass('invalid-feedback').html('');
                         $('#email').removeClass('is-invalid').siblings('p').removeClass('invalid-feedback').html('');
@@ -265,63 +229,5 @@
                 }
             });
         });
-
-     
-     $("#Province").change(function(){
-        $.ajax({
-            url: '{{ route("user.getOrderSummary") }}',
-            type: 'post',
-            data: {city: $(this).find("option:selected").text()}, // lấy tên thay vì id
-            dataType: 'json',
-            success: function(response){
-                if(response.status == true){
-                    $("#shippingFee").html(response.shipping); //lấy giá trị từ response truyền vào thẻ có id là #shippingFee
-                    $("#grandTotal").html(response.grandTotal);
-                    $("#discount_value").html(response.discount);
-                }
-            }
-        });
-     });
-
-     $('#apply-discount').click(function(){
-        $.ajax({
-            url: '{{ route("user.applyDiscount") }}',
-            type: 'post',
-            data: {code: $("#discount_code").val()},
-            dataType: 'json',
-            success: function(response){
-                if(response.status == true){
-                    // $("#shippingFee").html(response.shippingFee); //lấy giá trị từ response truyền vào thẻ có id là #shippingFee
-                    $("#grandTotal").html(response.grandTotal);
-                    $("#discount_value").html(response.discount);
-                }else{
-                    $("#discount_message").html("<span class='text-center text-danger'>"+response.message+"</span>");
-                }
-            },
-            error: function(xhr, status, error){
-            // Xử lý lỗi nếu có
-            console.log(xhr.responseText);
-        }
-        });
-     });
-
-     $('#remove_discout').click(function(){
-        $.ajax({
-            url: '{{ route("user.removeDiscount") }}',
-            type: 'post',
-            data: {},
-            dataType: 'json',
-            success: function(response){
-                if(response.status == true){
-                    $("#shippingFee").html(response.shippingFee); //lấy giá trị từ response truyền vào thẻ có id là #shippingFee
-                    $("#grandTotal").html(response.grandTotal);
-                    $("#discount_value").html(response.discount);
-                    $("#discount_reponse").html('');
-                }
-            }
-        });
-     });
-
-
    </script>
 @endsection

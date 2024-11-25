@@ -74,42 +74,40 @@ class AuthController extends Controller
         }
     }
 
-    public function authenticate(Request $request){
+    public function authenticate(Request $request) {
+        // Validate dữ liệu đầu vào
         $validator = Validator::make($request->all(), [
             'email' => 'required|email',
             'password' => 'required',
-
-        ],[
+        ], [
             'email.required' => 'Email không được để trống',
             'password.required' => 'Mật khẩu không được để trống',
         ]);
-
-        if($validator->passes()){
-
-            if(Auth::attempt(['email' => $request->email, 'password' => $request->password, 'role' => 1], $request->get('remember'))){
     
-                return redirect()->route('user.profile');
-
-            }
-            // else if(Auth::guard('admin')->attempt(['email' => $request->email, 'password' => $request->password, 'role' => 2], $request->get('remember'))){
-
-            //      return redirect()->route('admin.dashboard');
-
-            // }
-            else{
-                session()->flash('error', 'Email hoặc mật khẩu không chính xác');
-
-                return redirect()->route('user.login')
-                    ->withInput($request->only('email'))
-                    ->with('error', 'Email hoặc mật khẩu không chính xác');
-            }
-
-        }else{
+        // Kiểm tra validate
+        if ($validator->fails()) {
             return redirect()->route('user.login')
-            ->withErrors($validator)
-            ->withInput($request->only('email'));
+                ->withErrors($validator)
+                ->withInput($request->only('email'));
         }
+    
+        // Xác thực người dùng với vai trò role = 1 (người dùng thông thường)
+        if (Auth::attempt(['email' => $request->email, 'password' => $request->password, 'role' => 1], $request->filled('remember'))) {
+            
+            // Kiểm tra xem có URL nào được lưu trong session không
+            $intendedUrl = session('url.intended', route('user.profile')); // Mặc định chuyển đến trang profile
+            session()->forget('url.intended'); // Xóa session sau khi sử dụng
+            
+            return redirect($intendedUrl);
+        }
+    
+        // Đăng nhập thất bại
+        session()->flash('error', 'Email hoặc mật khẩu không chính xác');
+        return redirect()->route('user.login')
+            ->withInput($request->only('email'))
+            ->with('error', 'Email hoặc mật khẩu không chính xác');
     }
+    
 
     public function logout(){
 
@@ -276,20 +274,13 @@ class AuthController extends Controller
 
         // dd($orderDetail);
          // Lấy thông tin về mã giảm giá
-         $discountAmount = null;
-         $discountCode = $order->discount_code;
- 
-         if ($discountCode) {
-             $discount = DiscountCoupon::where('code', $discountCode)->first();
-             $discountAmount = $discount ? $discount->discount_amount : null;
-         }
-
+        
         $data['order'] = $order;
         // dd(  $orderDetail);
         $data['orderDetail'] =  $orderDetail;
 
         return view('user.account.orderDetail', $data, [
-            'discountAmount' => $discountAmount
+
         ]);
     }
 
@@ -330,36 +321,6 @@ class AuthController extends Controller
   
     }
 
-    public function wishList(){
-
-        $wishlists = Wishlist::where('user_id', Auth::user()->id)->with('product')->get();
-
-        // dd($wishlists);
-
-        $data['wishlists'] =  $wishlists;
-
-        return view('user.account.wishlists', $data);
-    }
-
-    public function removeProductWishList(Request $request){
-        $wishlists = Wishlist::where('user_id', Auth::user()->id)->where('product_id', $request->id)->get();
-
-
-        if($wishlists == null){
-            session()->flash('error', 'Sản phẩm đã được xóa');
-            return response()->json([
-                'status' => true,
-                'message' => 'Xóa sản phẩm yêu thích thành công!!'
-              ]);
-        }else{
-            $wishlists = Wishlist::where('user_id', Auth::user()->id)->where('product_id', $request->id)->delete();
-            session()->flash('success', 'Xóa sản phẩm yêu thích thành công!');
-            return response()->json([
-                'status' => true,
-                'message' => 'Xóa sản phẩm yêu thích thành công!'
-              ]);
-        }
-    }
 
     public function changePassWordForm(){
         return view('user.account.changepassword');

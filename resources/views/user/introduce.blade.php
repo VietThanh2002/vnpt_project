@@ -2,25 +2,24 @@
 
 @section('content')
     <section style="margin-top: 200px">
-        <h2 class="bd-title d-flex justify-content-center mt-4">GIỚI THIỆU VỀ CỬA HÀNG</h2>
+        <h2 class="bd-title d-flex justify-content-center mt-4">GIỚI THIỆU VỀ VNPT ĐỒNG THÁP</h2>
         <div class="container my-5 ">
             <div class="row featurette d-flex justify-content-center align-items-center">
                 <div class="col-md-7">
-                    <p class="lead" style="text-align: justify">Chào mừng quý khách đến với cửa hàng phụ tùng xe máy của chúng tôi! Với đam mê và kinh nghiệm lâu năm trong ngành, chúng tôi tự hào là địa chỉ tin cậy cho những người yêu xe máy. Cửa hàng của chúng tôi cam kết cung cấp những sản phẩm chất lượng cao, đa dạng và phù hợp với mọi loại xe. Chúng tôi không chỉ mang đến cho khách hàng những sản phẩm chất lượng mà còn đảm bảo dịch vụ chăm sóc khách hàng tận tâm và chuyên nghiệp.</p>
+                    <p class="lead" style="text-align: justify">VNPT Đồng Tháp là một trong những chi nhánh quan trọng của Tập đoàn Bưu chính Viễn thông Việt Nam (VNPT), hoạt động chủ yếu trong lĩnh vực cung cấp dịch vụ viễn thông và internet tại tỉnh Đồng Tháp. Được thành lập với mục tiêu nâng cao chất lượng dịch vụ và đáp ứng nhu cầu ngày càng cao của người dân, VNPT Đồng Tháp đã không ngừng mở rộng mạng lưới và cải thiện công nghệ để phục vụ khách hàng tốt hơn. Chi nhánh này cam kết mang đến các sản phẩm và dịch vụ viễn thông hiện đại, bao gồm internet cáp quang, di động và các giải pháp công nghệ thông tin.</p>
                 </div>
                 <div class="col-md-5">
-                    <img src="{{ asset('user-assets/image/img_store/1.jpg') }} " 
+                    <img src="{{ asset('user-assets/image/vnpt thủ đức 1.jpg') }} " 
                     class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500" alt="">
                 </div>
             </div>
             <div class="row featurette d-flex justify-content-center align-items-center mt-4">
                 <div class="col-md-7 order-md-2">
-                    <p class="lead" style="text-align: justify">Tại cửa hàng chúng tôi, không chỉ là nơi để mua sắm phụ tùng, mà còn là điểm đến của cộng đồng đam mê xe máy. Chúng tôi luôn sẵn lòng chia sẻ kiến thức và kinh nghiệm với khách hàng, giúp họ hiểu rõ hơn về việc bảo dưỡng và nâng cấp xe của mình. Với đội ngũ nhân viên nhiệt tình và am hiểu về xe máy, chúng tôi tin rằng mỗi lần ghé thăm cửa hàng sẽ là một trải nghiệm đặc biệt, giúp khách hàng cảm thấy hài lòng và tự tin với sự lựa chọn của mình. Hãy đồng hành cùng chúng tôi trên hành trình khám phá thế giới xe máy và tận hưởng niềm đam mê!</p>
+                    <p class="lead" style="text-align: justify">Với sự phát triển mạnh mẽ, VNPT Đồng Tháp đã phủ sóng 100% hạ tầng cáp quang trên toàn tỉnh, giúp người dân và doanh nghiệp dễ dàng tiếp cận với dịch vụ internet tốc độ cao. Ngoài ra, VNPT Đồng Tháp cũng thường xuyên tổ chức các chương trình khuyến mãi hấp dẫn nhằm thu hút khách hàng, đồng thời đóng góp tích cực vào sự phát triển kinh tế - xã hội của địa phương. Chi nhánh còn chú trọng đến việc nâng cao chất lượng phục vụ khách hàng thông qua việc đào tạo nhân viên chuyên nghiệp và cải tiến quy trình phục vụ.</p>
                 </div>
                 <div class="col-md-5 order-md-1">
-                    <img src="{{ asset('user-assets/image/img_store/3.jpg') }} " 
+                    <img src="{{ asset('user-assets/image/banner_gioithieu_mb.jpg') }} " 
                     class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500" alt="">
-        
                 </div>
             </div>
             <hr class="featurette-divider">

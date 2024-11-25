@@ -19,11 +19,8 @@ class ShopController extends Controller
         $categorySelected = '';
         $subCategorySelected = '';
 
-
-
-        $categories = Category::orderBy('name','ASC')->with('sub_category')->where('status', 1)->take(8)->get();
-        $brands = Brand::orderBy('name','ASC')->where('status', 1)->get();
-        $products = Product::where('status', 1);
+        $categories = Category::orderBy('name','ASC')->with('sub_category')->where('status', 1)->where('name', 'INTERNET - TRUYỀN HÌNH')->take(8)->get();
+        $products = Product::where('status', 1)->where('type', 'Dịch vụ Internet');
 
         // Lọc sản phẩm
         if(!empty($categorySlug)){
@@ -81,12 +78,10 @@ class ShopController extends Controller
         $products = $products->paginate(6);
 
         $data['categories'] = $categories;
-        $data['brands'] = $brands;
         $data['products'] = $products;
 
         $data['categorySelected'] =  $categorySelected;
         $data['subCategorySelected'] = $subCategorySelected;
-        $data['brandsArray'] = $brandsArray;
 
         $data['priceMax'] = (intval($request->get('price_max')) == 0) ? 10000000 : intval($request->get('price_max'));
         $data['priceMin'] = intval($request->get('price_min'));
@@ -133,11 +128,9 @@ class ShopController extends Controller
         $data['relatedProducts'] =  $relatedProducts;
 
         return view('user.product', $data);
-
     }
 
     public function saveRating(Request $request, $productId){
-
         $validator = Validator::make($request->all(), [
             'name' => 'required|min:6',
             'email' => 'required|email',

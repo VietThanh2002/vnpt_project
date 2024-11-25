@@ -85,13 +85,11 @@
 			<footer class="main-footer">
 				
 				<div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2); text-color: #E0E0E0">
-					© <?= date('Y'); ?> Copyright: <span>B2014610</span> 
+					© <?= date('Y'); ?> Copyright: <span>VNPT Đồng Tháp</span> 
 				</div>
 			</footer>
 			
 		</div>
-		
-
 		<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 		
 		<script src="{{asset ('admin-assets/plugins/jquery/jquery.min.js')}}"></script>

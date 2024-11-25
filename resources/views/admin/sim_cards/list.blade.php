@@ -5,10 +5,10 @@
 					<div class="container-fluid my-2">
 						<div class="row mb-2">
 							<div class="col-sm-6">
-								<h1>Danh sách dịch vụ Internet</h1>
+								<h1>Danh số điện thoại</h1>
 							</div>
 							<div class="col-sm-6 text-right">
-								<a href="{{ route('products.create') }}" class="btn btn-primary">Thêm sản phẩm</a>
+								<a href="{{ route('sim-card.create') }}" class="btn btn-primary">Thêm số điện thoại</a>
 							</div>
 						</div>
 					</div>
@@ -44,42 +44,33 @@
 								<table id="myTable" class="table table-bordered table-hover">
 									<thead>
 										<tr>
-											<th>ID</th>
-											<th>Hình ảnh</th>
-											<th>Tên</th>
-											<th>Giá dịch vụ / 1 tháng</th>
+											<th>STT</th>
+											<th>Số Sim</th>
+											<th>Giá</th>
+											<th>Loại Sim</th>
 											<th>Trạng thái</th>
 											<th>Hành động</th>
 										</tr>
 									</thead>
 									<tbody>
-                                        @if($products->isNotEmpty())
-                                            @foreach ($products as $item)
-													@php
-														$productImage =  $item->product_images->first(); //load từ model product
-													@endphp
+                                        @if($simCards->isNotEmpty())
+                                            @foreach ($simCards  as $key => $item)
                                                     <tr>
-                                                        <td>{{ $item->id }}</td>
-                                                        <td>
-                                                            @if (!empty($productImage->image))
-                                                                <img src="{{ asset('/uploads/product/'.$productImage->image) }} " class="img-thumbnail" width="50"> 
-															@else
-																<img src="{{ asset('admin-assets/img/default-150x150.png') }} " class="img-thumbnail" width="50" > 
-                                                            @endif
-                                                        </td>
-                                                        <td style= "width: 200px;">{{ $item->name }}</td>
-                                                        <td data-order="{{ $item->price}}">{{  formatPriceVND($item->price) }}</td>								
+                                                        <td>{{ $key+1 }}</td>
+                                                        <td style= "width: 200px;">{{ $item->sim_number }}</td>
+                                                        <td data-order="{{ $item->price}}">{{  formatPriceVND($item->price) }}</td>
+                                                        <td>{{ $item->sim_type }}</td>										
                                                         <td style="text-align: center;">
-                                                            @if (($item->status == 1))
+                                                            @if ($item->status = 1)
 																<div clas="text-center">
 																	<i class="fa-regular fa-circle-check btn btn-success btn-sm"></i>
 																</div>
 															@else
-																<p class="text-danger">Ngưng kinh doanh</p>
+																<p class="text-danger">Đã bán</p>
 															@endif
                                                         </td>
                                                         <td>
-                                                            <a href="{{ route('products.edit', $item->id) }}" class="btn btn-sm">
+                                                            <a href="{{ route('sim-card.edit', $item->id) }}" class="btn btn-sm">
 																<i class='btn-sm bx bxs-edit'></i>
                                                             </a>
                                                             <a href="#" onclick="deleteProduct( {{ $item->id}} )" class="text-danger w-4 h-4 mr-1">
@@ -90,7 +81,7 @@
                                             @endforeach
                                         @else
                                            <tr>
-                                                <td class="text-center" colspan="8">Danh sách sản phẩm trống!</td>
+                                                <td class="text-center" colspan="8">Trống!</td>
                                            </tr>
                                         @endif
 									</tbody>
@@ -98,7 +89,7 @@
 							</div>
 							<div class="card-footer clearfix">
 								<ul class="pagination pagination m-0 float-right">
-                                    {{ $products->links() }}
+                                    {{  $simCards ->links() }}
 								</ul>
 							</div>
 						</div>

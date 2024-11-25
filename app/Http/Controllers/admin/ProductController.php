@@ -14,14 +14,11 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
 
-
-use NumberFormatter;
-
 class ProductController extends Controller
 {
     public function index(Request $request){
 
-        $products = Product::latest('id')->with('product_images');
+        $products = Product::latest('id')->with('product_images')->where('type', 'Dịch vụ Internet');
 
         if($request->get('keyword') != ""){
             $products = $products->where('name','like','%'.$request->keyword.'%');
@@ -40,44 +37,22 @@ class ProductController extends Controller
     public function create(){
         $data = [];
         $categories = Category::orderBy('name', 'ASC')->get();
-        $brands = Brand::orderBy('name', 'ASC')->get();
-       
-
         $data['categories'] =   $categories;
-        $data['brands'] =   $brands;
-
         return view('admin.products.create', $data);
     }
 
     public function store(Request $request){
-
-
         $rule = [
             'name' => 'required',
             'des' => 'required',
             'price' => 'required|numeric',
-            'sku' => 'required|unique:products',
-            'track_qty' => 'required|in:Yes,No',
-            'category' => 'required|numeric',
-            'is_featured' => 'required|in:Yes,No',
-            
+            'category' => 'required|numeric',            
         ];
-
-        
-        if(!empty($request->track_qty) && $request->track_qty == 'Yes'){
-            $rule['qty'] = 'required|numeric'; //numeric yêu cầu giá trị số
-        }
 
         $customMessages = [
             'name.required' => 'Tên không được để trống.',
             'des.required' => 'Mô tả không được để trống.',
-            'price.required' => 'Giá sản phẩm không được để trống.',
-            'sku.required' => 'Mã định danh sản phẩm không được để trống.',
-            'sku.unique' => 'Mã định danh sản phẩm đã tồn tại.',
-            'category.required' => 'Vui lòng chọn danh mục sản phẩm.',
-            'qty.required' => 'Vui lòng nhập số lượng sản phẩm.',
-            
-
+            'price.required' => 'Giá sản phẩm không được để trống.',            
         ];      
     
         $validator = Validator::make($request->all(), $rule, $customMessages);
@@ -85,26 +60,16 @@ class ProductController extends Controller
         if($validator->passes()){
             
             $product = new Product();
-    
+
             $product->name = $request->name;
             $product->slug = $request->slug;
             $product->des = $request->des;
+            $product->short_des = $request->short_des;
             $product->price = $request->price;
-            $product->compare_price = $request->compare_price;
-            $product->guarantee = $request->guarantee;
-            $product->import_qty = $request->qty;
-            $product->qty = $request->qty;
-            $product->track_qty = $request->track_qty;
-            $product->sku = $request->sku;
-            $product->barcode = $request->barcode;
+            $product->type = 'Dịch vụ Internet';
             $product->status = $request->status;
             $product->category_id = $request->category;
             $product->sub_category_id = $request->sub_category;
-            $product->brand_id = $request->brand;
-            $product->is_featured = $request->is_featured;
-            $product->short_des = $request->short_des;
-            $product->shipping_returns = $request->shipping_returns;
-            $product->related_products = (!empty($request->related_products)) ? implode(',', $request->related_products) : '';
             $product->save();
             
             if(!empty($request->image_array)){
@@ -170,7 +135,6 @@ class ProductController extends Controller
 
         $subCategories = SubCategory::where('category_id', $product->category_id)->get();
         $categories = Category::orderBy('name', 'ASC')->get();
-        $brands = Brand::orderBy('name', 'ASC')->get();
         // dd($subCategory);
 
         
@@ -178,7 +142,6 @@ class ProductController extends Controller
         $data['product'] = $product;
         $data['subCategories'] = $subCategories;
         $data['categories'] =   $categories;
-        $data['brands'] =   $brands;
         $data['productImages'] =  $productImages;
 
         $data['relatedProducts'] =  $relatedProducts;
@@ -198,15 +161,9 @@ class ProductController extends Controller
             'slug' => 'required|unique:products,slug,' .$product->id.',id',
             'des' => 'required',
             'price' => 'required|numeric',
-            'slug' => 'required|unique:products,sku,' .$product->id.',id',
-            'track_qty' => 'required|in:Yes,No',
             'category' => 'required|numeric',
-            'is_featured' => 'required|in:Yes,No',
             
         ];      
-         if(!empty($request->track_qty) && $request->track_qty == 'YES'){
-            $rule['qty'] = 'required|numeric';
-         }
 
          $Validator =  Validator::make($request->all(), $rule);
 
@@ -215,25 +172,14 @@ class ProductController extends Controller
             $product->name = $request->name;
             $product->slug = $request->slug;
             $product->des = $request->des;
+            $product->short_des = $request->short_des;
             $product->price = $request->price;
-            $product->compare_price = $request->compare_price;
-            $product->import_qty = $request->qty;
-            $product->qty = $request->qty;
-            $product->guarantee = $request->guarantee;
-            $product->track_qty = $request->track_qty;
-            $product->sku = $request->sku;
-            $product->barcode = $request->barcode;
+            $product->type = 'Dịch vụ Internet';
             $product->status = $request->status;
             $product->category_id = $request->category;
             $product->sub_category_id = $request->sub_category;
-            $product->brand_id = $request->brand;
-            $product->is_featured= $request->is_featured;
-            $product->short_des = $request->short_des;
-            $product->shipping_returns = $request->shipping_returns;
-            $product->related_products = (!empty($request->related_products)) ? implode(',', $request->related_products) : '';
             $product->save();
             
-
              session()->flash('success', 'Cập nhật sản phẩm thành công!');
  
              return response()->json([
@@ -248,10 +194,8 @@ class ProductController extends Controller
                  'errors' => $Validator->errors()
              ]);
          }
- 
-
-        
     }
+
     public function destroy($id, Request $request){
 
         $product = Product::find($id);

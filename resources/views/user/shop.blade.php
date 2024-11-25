@@ -7,7 +7,7 @@
                 <div class="col-md-3 sidebar">
                     <div class="card">
                         <div class="mt-3 sub-title text-center">
-                            <h3 class="fw-bold">Danh mục sản phẩm</h3>
+                            <h3 class="fw-bold">Danh mục dịch vụ</h3>
                         </div><hr>
                         <div class="card-body">
                             <div class="accordion accordion-flush" id="accordionExample">
@@ -42,24 +42,6 @@
                             </div>
                         </div>
                     </div>
-                    {{-- <div class="mt-5 card">
-                        <div class="card-body">
-                            <div class="text-center sub-title mt-3">
-                                <h3 class="fw-bold" >Thương hiệu</h3>
-                            </div><hr>
-                                @if (!empty($brands))
-                                    @foreach ($brands as $brand)
-                                            <div class="form-check mb-2">
-                                                <input {{ in_array($brand->id,  $brandsArray) ? 'checked' : ''}} class="form-check-input brand-label" type="checkbox" name="brand[]" value="{{$brand->id}}" id="brand-{{ $brand->id }}">
-                                                <label class="form-check-label" for="brand-{{ $brand->id }}"> 
-                                                    for label trỏ đến ô checkbox, kích hoạt ô checkbox khi nhấp vào nhãn
-                                                    {{ $brand->name }}
-                                                </label>
-                                            </div>          
-                                    @endforeach    
-                                @endif
-                        </div>
-                    </div> --}}      
                     <div class="mt-5 card">                    
                         <div class="text-center sub-title mt-3">
                             <h3>Giá</h3>
@@ -89,7 +71,6 @@
                                 $productImage =  $product->product_images->first();
                             @endphp
                             <div class="col-lg-3 col-sm-12 col-md-4 list-group-item me-1 rounded-1">
-                                <a href="javascript:void(0);" onclick="addToWishlist({{ $product->id}})" class="whishlist d-flex justify-content-end m-2"><i class="far fa-heart"></i></a>        
                                 <div class="product_img position-relative">
                                     <a href="{{ route("user.product", $product->slug) }}" class="product-img">
                                         @if (!empty($productImage->image))
@@ -105,27 +86,10 @@
                                     </div>
                                     <div class="product_price">
                                         <span class="h5"><strong> {{  formatPriceVND($product->price) }}</strong></span>
-                                       @if ($product->compare_price > 0)
-                                        <span class="h6 text-underline"><del> {{ ($product->compare_price) }}</del></span>
-                                       @endif
                                     </div>
                                 </div>
                                 <div class="text-center">
-                                    @if ($product->track_qty == 'Yes')
-                                        @if ($product->qty > 0)
-                                            <button class="btn_cart">
-                                                <a href="javascript:void(0);" onclick="addToCart( {{ $product->id }});" class="fa-solid fa-cart-shopping text-danger"></a>
-                                            </button>
-                                        @else
-                                            <p class="text-center">
-                                                Sản phẩm này đã hết hàng
-                                            </p>
-                                        @endif
-                                    @else
-                                        <button class="btn_cart">
-                                            <a href="javascript:void(0);" onclick="addToCart( {{ $product->id }});" class="fa-solid fa-cart-shopping text-danger"></a>
-                                        </button>
-                                    @endif
+                                    <a class="btn border-info" href="{{ route("user.product", $product->slug) }}">Xem chi tiết</a>
                                 </div>
                             </div>
                         @endforeach
@@ -144,22 +108,21 @@
 
 @section('js')
     <script>
-
-    function addToCart(id){
-         $.ajax({
-                 url: '{{ route("user.addService") }}',
-                 type: 'post',
-                 data: {id:id},
-                 dataType: 'json',
-                 success: function(response){
-                     if(response.status == true){
+        function addService(id){
+           $.ajax({
+                url: '{{ route("user.addService") }}',
+                type: 'post',
+                data: {id:id},
+                dataType: 'json',
+                success: function(response){
+                    if(response.status == true){
                         window.location.href = "{{ route('user.checkout') }}";
-                     }else{
-                            alert(response.message)
-                     }
-                 } 
-            });
-        }
+                    }else{
+                        alert(response.message)
+                    }
+                } 
+           });
+        };
         
         rangeSlider = $(".js-range-slider").ionRangeSlider({
             type: "double",
@@ -180,39 +143,18 @@
 
         // chọn thương hiệu
 
-        $(".brand-label").change(function(){
-            apply_filters();
-        });
-
         $("#sort").change(function () {
             apply_filters();
         });
 
         function apply_filters(){
-            var brands = [];
-
-            $(".brand-label").each(function(){
-
-                if($(this).is(":checked") == true){
-                    brands.push($(this).val());
-
-                }
-
-            });
            // console.log(brands.toString());
 
             var url =  '{{ url()->current() }}?'; // lấy url hiện tại
             // giá tiền kéo lọc
 
             url += '&price_min='+slider.result.from+'&price_max='+slider.result.to;
-
-            // lọc thương hiệu
-            if(brands.length > 0){
-                url += '&brand='+brands.toString();
-            }
-
             // sort 
-
             var keyword = $("#search").val();
 
             if(keyword.length > 0){

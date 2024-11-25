@@ -9,16 +9,12 @@ use App\Http\Controllers\admin\AdminLoginController;
 use App\Http\Controllers\admin\CategoryController;
 use App\Http\Controllers\admin\HomeController;
 use App\Http\Controllers\admin\SubCategoryController;
-use App\Http\Controllers\admin\BrandsController;
 use App\Http\Controllers\admin\ProductController;
 use App\Http\Controllers\admin\ProductImageController;
 use App\Http\Controllers\admin\ProductSubCategoryController;
-use App\Http\Controllers\admin\ShippingController;
-use App\Http\Controllers\admin\DiscountCodeController;
 use App\Http\Controllers\admin\UserListController;
 use App\Http\Controllers\admin\TempImagesController;
 use App\Http\Controllers\admin\OrderController;
-use App\Http\Controllers\admin\WarehouseController;
 use App\Http\Controllers\admin\PdfController;
 use App\Http\Controllers\admin\ChangePassWordController;
 use App\Http\Controllers\admin\ListProductSellingController;
@@ -32,15 +28,13 @@ use App\Http\Controllers\user\IntroduceController;
 use App\Http\Controllers\user\PaymentOnlineController;
 use App\Http\Controllers\user\ShopController;
 use App\Http\Controllers\user\FrontController;
+use App\Http\Controllers\user\ShowSimController;
 
 //Staff
 use App\Http\Controllers\staff\StaffLoginController;
 use App\Http\Controllers\staff\DeliveryController;
 
-//Test QR code
-use App\Http\Controllers\admin\QrCodeController;
-
-Route::get('/test', [QrCodeController::class, 'showHello']);
+use App\Http\Controllers\admin\SimCardController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -57,10 +51,12 @@ Route::get('/test', [QrCodeController::class, 'showHello']);
 
 Route::get('/', [FrontController::class, 'index'])->name('user.home');
 Route::get('/shop/{categorySlug?}/{subCategorySlug?}', [ShopController::class, 'index'])->name('user.shop');
+Route::get('/sim-so', [ShowSimController::class, 'index'])->name('user.simSo');
 Route::get('/product/{slug}', [ShopController::class, 'product'])->name('user.product');
 // Cart
 Route::get('/cart', [CartController::class, 'cart'])->name('user.cart');
 Route::post('/add-to-cart', [CartController::class, 'addService'])->name('user.addService');
+Route::post('/buy-sim', [CartController::class, 'buySim'])->name('user.buySim');
 Route::post('/add-to-wishlist', [FrontController::class, 'addToWishlist'])->name('user.addToWishlist');
 
 Route::post('/update-cart', [CartController::class, 'updateCart'])->name('user.updateCart');
@@ -145,7 +141,6 @@ Route::group(['prefix'=> '/staff'], function(){
     });
 });
 
-
 Route::group(['prefix'=> 'admin'], function(){
     
     Route::group(['middleware' => 'admin.guest'], function(){
@@ -183,7 +178,7 @@ Route::group(['prefix'=> 'admin'], function(){
         Route::get('/categories/{category}/edit', [CategoryController::class, 'edit'])->name('categories.edit');
         Route::put('/categories/{category}', [CategoryController::class, 'update'])->name('categories.update');
         Route::delete('/categories/{category}', [CategoryController::class, 'destroy'])->name('categories.destroy');
-    
+
        // Sub category
         Route::get('/sub-categories', [SubCategoryController::class, 'index'])->name('sub-categories.index');
         Route::get('/sub-categories/create', [SubCategoryController::class, 'create'])->name('sub-categories.create');
@@ -192,14 +187,6 @@ Route::group(['prefix'=> 'admin'], function(){
         Route::put('/sub-categories/{SubCategory}', [SubCategoryController::class, 'update'])->name('sub-categories.update');
         Route::delete('/sub-categories/{SubCategory}', [SubCategoryController::class, 'destroy'])->name('sub-categories.destroy');
         Route::post('/upload-temp-image', [TempImagesController::class, 'create'])->name('temp-images.create');
-
-        // Brands 
-        Route::get('/brands', [BrandsController::class, 'index'])->name('brands.index');
-        Route::get('/brands/create', [BrandsController::class, 'create'])->name('brands.create');
-        Route::post('/brands', [BrandsController::class, 'store'])->name('brands.store');
-        Route::get('/brands/{brand}/edit', [BrandsController::class, 'edit'])->name('brands.edit');
-        Route::put('/brands/{brand}', [BrandsController::class, 'update'])->name('brands.update');
-        Route::delete('/brands/{brand}', [BrandsController::class, 'destroy'])->name('brands.destroy');
 
         // Product
         Route::get('/products', [ProductController::class, 'index'])->name('products.index');
@@ -215,21 +202,13 @@ Route::group(['prefix'=> 'admin'], function(){
         // Route::get('/ratings-products', [ProductController::class, 'productRating'])->name('products.productRating');
         // Route::post('/change-rating-status', [ProductController::class, 'changeRatingStatus'])->name('products.changeRatingStatus');
 
-        //shipping cost
-        Route::get('/shipping', [ShippingController::class, 'index'])->name('shipping.index');
-        Route::get('/shipping/create', [ShippingController::class, 'create'])->name('shipping.create');
-        Route::post('/shipping', [ShippingController::class, 'store'])->name('shipping.store');
-        Route::get('/shipping/{shipping}/edit', [ShippingController::class, 'edit'])->name('shipping.edit');
-        Route::patch('/shipping/{id}', [ShippingController::class, 'update'])->name('shipping.update');
-        Route::delete('/shipping/{id}', [ShippingController::class, 'destroy'])->name('shipping.destroy');
-
-        // DiscountCode
-        Route::get('/discount', [DiscountCodeController::class, 'index'])->name('discount.index');
-        Route::get('/discount/create', [DiscountCodeController::class, 'create'])->name('discount.create');
-        Route::post('/discount', [DiscountCodeController::class, 'store'])->name('discount.store');
-        Route::get('/discount/{id}/edit', [DiscountCodeController::class, 'edit'])->name('discount.edit');
-        Route::put('/discount/{id}', [DiscountCodeController::class, 'update'])->name('discount.update');
-        Route::delete('/discount/{id}', [DiscountCodeController::class, 'destroy'])->name('discount.destroy');
+        // Sim card
+        Route::get('/sim-card', [SimCardController::class, 'index'])->name('sim-card.index');
+        Route::get('/sim-card/create', [SimCardController::class, 'create'])->name('sim-card.create');
+        Route::post('/sim-card', [SimCardController::class, 'store'])->name('sim-card.store');
+        Route::get('/sim-card/{id}/edit', [SimCardController::class, 'edit'])->name('sim-card.edit');
+        Route::put('/sim-card/{id}', [SimCardController::class, 'update'])->name('sim-card.update');
+        Route::delete('/sim-card/{id}', [SimCardController::class, 'destroy'])->name('sim-card.destroy');
 
         //Get order and orderDetail
         Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
@@ -251,9 +230,6 @@ Route::group(['prefix'=> 'admin'], function(){
         Route::get('/staffs/{id}/edit', [StaffsManagerController::class, 'edit'])->name('staffs.edit');
         Route::put('/staffs/{id}', [StaffsManagerController::class, 'update'])->name('staffs.update');
         Route::delete('/staffs/{id}', [StaffsManagerController::class, 'destroy'])->name('staffs.destroy');
-
-        //warehouse
-        Route::get('/warehouse-import-products', [WarehouseController::class, 'import'])->name('warehouse.import');
        
         // Export PDF
         Route::get('invoice/{orderId}', [PdfController::class, 'index']);

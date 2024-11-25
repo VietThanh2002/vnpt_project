@@ -16,26 +16,25 @@
                     <!-- Info-1 -->
                     <div class="info">
                         <i class="fas fa-mobile-alt"></i>
-                        <h4 class="d-inline-block">PHONE :
+                        <h4 class="d-inline-block">PHONE : 11111111111
                             <br>
-                            <span>0767957642 , 0916657222</span></h4>
+                            <span></span></h4>
                     </div>
                     <!-- Info-2 -->
                     <div class="info">
                         <i class="far fa-envelope"></i>
                         <h4 class="d-inline-block">EMAIL :
                             <br>
-                            <span>thanhb2014610@gmail.com</span></h4>
+                            <span>vnptdt@gmail.com</span></h4>
                     </div>
                     <!-- Info-3 -->
                     <div class="info">
                         <i class="fas fa-map-marker-alt"></i>
                         <h4 class="d-inline-block">Địa chỉ :<br>
-                            <span>642/2 Tân Mỹ, Lai Vung, Đồng Tháp</span></h4>
+                            <span>Lai Vung, Đồng Tháp</span></h4>
                     </div>
                 </div>
             </div>
-
             <div class="col-md-7">
                 @include('user.message')
                 <form method="post" id="contactForm"  name="contactForm">

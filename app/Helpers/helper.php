@@ -8,6 +8,7 @@
     use App\Models\ProductImage;
     use Illuminate\Support\Facades\Mail;
     use App\Models\DiscountCoupon;
+    use App\Models\InternetService;
 
     function getCategories(){
        return Category::orderBy('name', 'ASC')
@@ -18,13 +19,10 @@
             ->get();
     }
 
-    function getProductsSale(){
-        return Product::orderBy('id', 'DESC')
-        ->where('compare_price', '>', 0)
-        ->where('status', 1)
-        ->take(8)
-        ->get();
+    function getInternetServices(){
+        return InternetService::where('status', 1)->orderBy('id', 'DESC')->get();
     }
+
 
     function getProductImage($productId){
         return ProductImage::where('product_id', $productId)->first();

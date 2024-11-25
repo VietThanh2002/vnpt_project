@@ -52,7 +52,7 @@
                             <li class="nav-item">
                                 <a class="nav-link fw-bold" href="{{ route('user.introduce')}}">Giới thiệu</a>
                             </li>
-                            <li class="nav-item dropdown">
+                            {{-- <li class="nav-item dropdown">
                               <a class="nav-link fw-bold dropdown-toggle" href="#" data-bs-toggle="dropdown"> Danh mục danh vụ</a>
                                 <ul class="dropdown-menu">
                                   <li><a class="dropdown-item" href="{{ route('user.shop') }}"> TẤT CẢ</a></li>
@@ -62,6 +62,12 @@
                                     @endforeach    
                                   @endif
                                 </ul>
+                            </li> --}}
+                            <li>
+                                <a class="nav-link fw-bold" href="{{ route('user.shop')}}">Dịch vụ Internet</a>
+                            </li>
+                            <li>
+                                <a class="nav-link fw-bold" href="{{ route('user.simSo')}}">Sim số</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link fw-bold" href="#">Tin tức</a>

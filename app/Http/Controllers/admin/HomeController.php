@@ -135,7 +135,6 @@ class HomeController extends Controller
             'totalRevenueQuarter2' =>  $totalRevenueQuarter2,
             'totalRevenueQuarter3' =>  $totalRevenueQuarter3,
             'totalRevenueQuarter4' =>  $totalRevenueQuarter4,
-
         ]); 
         // $admin = Auth::guard('admin')->user();
 

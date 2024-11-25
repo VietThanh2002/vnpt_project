@@ -68,21 +68,6 @@
                             </div>
                         </div>
                         <div class="text-center">
-                            {{-- @if ($product->track_qty == 'Yes')
-                                @if ($product->qty > 0)
-                                    <button class="btn_cart">
-                                        <a href="javascript:void(0);" onclick="addToCart( {{ $product->id }});" class="fa-solid fa-cart-shopping text-danger"></a>
-                                    </button>
-                                @else
-                                    <p class="text-center">
-                                        Sản phẩm này đã hết hàng
-                                    </p>
-                                @endif
-                            @else
-                                <button class="btn_cart">
-                                    <a href="javascript:void(0);" onclick="addToCart( {{ $product->id }});" class="fa-solid fa-cart-shopping text-danger"></a>
-                                </button>
-                            @endif --}}
                             <a class="btn border-info" href="{{ route("user.product", $product->slug) }}">Xem chi tiết</a>
                         </div>
                     </div>

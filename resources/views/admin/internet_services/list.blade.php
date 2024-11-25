@@ -6,10 +6,10 @@
         <div class="container-fluid my-2">
         	<div class="row mb-2">
         		<div class="col-sm-6">
-        			<h1>Phí vận chuyển</h1>
+        			<h1>Danh sách dịch vụ internet</h1>
         		</div>
         		<div class="col-sm-6 text-right">
-        			<a href="{{ route('shipping.create') }}" class="btn btn-primary">Thêm phí vận chuyển</a>
+        			<a href="{{ route('internet_services.create') }}" class="btn btn-primary">Thêm</a>
         		</div>
         	</div>
         </div>
@@ -20,14 +20,17 @@
 					<!-- Default box -->
 					<div class="container-fluid">
 						<div class="card">
+							<div class="card-header py-3">
+								<h6 class="m-0 font-weight-bold text-primary"></h6>
+							</div>
 							<form action="" method="get">
 								<div class="card-header">
 									<div class="float-right">
-										<button onclick="window.location.href='{{ route('shipping.index')}}'" type="button" class="btn btn-sm btn-default"><i class='bx bx-refresh'></i></button>
+										<button onclick="window.location.href='{{ route('internet_services.index')}}'" type="button" class="btn btn-sm btn-default"><i class='bx bx-refresh'></i></button>
 									</div>
 									<div class="card-tools float-left">
 										<div class="input-group input-group" style="width: 250px;">
-											<input value="{{ Request::get('keyword') }}" type="text" name="keyword" class="form-control" placeholder="Search">
+											<input value="{{ Request::get('keyword') }}" type="text" name="keyword" class="form-control" placeholder="Tìm kiếm">
 						
 											<div class="input-group-append">
 											<button type="submit" class="btn btn-default">
@@ -48,23 +51,37 @@
 									<thead>
 										<tr>
 											<th>ID</th>
-											<th>Tên Tỉnh / Thành phố</th>
-											<th>Phí vận chuyển</th>
-											<th>Thao tác</th>
+                                            <th>Hình ảnh</th>
+											<th>Tên dịch vụ</th>
+											<th>Trạng thái</th>
+											<th>Hành động</th>
 										</tr>
 									</thead>
 									<tbody>
-                                        @if ($shippings->isNotEmpty())
-                                            @foreach ($shippings as $item)
+                                        @if ($internetServices->isNotEmpty())
+                                            @foreach ($internetServices as $item)
                                                 <tr>
                                                     <td>{{ $item->id}}</td>
-                                                    <td>{{ $item->city_province}}</td>
-                                                    <td data-order="{{ $item->shipping_fee }}">{{ formatPriceVND($item->shipping_fee)}}</td>
                                                     <td>
-                                                        <a href="{{ route('shipping.edit', $item->id) }}" class="btn btn-sm">
+                                                        <img src="{{ asset('/uploads/service/' . $item->image) }}" alt="" style="width: 50px; height: 50px;">
+                                                    </td>
+                                                    <td>{{ $item->service_name}}</td>
+													<td style="text-align: center;">
+                                                        @if ($item->status==1)
+															<div clas="text-center">
+																<i class="fa-regular fa-circle-check btn btn-success btn-sm"></i>
+															</div>
+                                                        @else
+															<div class="">
+																<i class="fa-solid fa-circle-xmark text-danger h-6 w-6 rounded-circle"></i>
+															</div>
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        <a href="{{ route('internet_services.edit', $item->id) }}" class="btn btn-sm">
 															<i class='btn-sm bx bxs-edit'></i>
                                                         </a>
-                                                        <a href="#" onclick="deleteShipping( {{ $item->id}} )" class="text-danger w-4 h-4 mr-1">
+                                                        <a href="#" onclick="deleteService( {{ $item->id}} )" class="text-danger w-4 h-4 mr-1">
 															<i class='btn-sm bx bx-trash-alt'></i>
                                                         </a>
                                                     </td>
@@ -72,14 +89,14 @@
                                             @endforeach
                                             
                                         @else
-                                            <td colspan="5" class="text-center">Danh sách phí vận chuyển trống!!</td>
+                                            <td colspan="5" class="text-center">Rống!!</td>
                                         @endif
 										
 									</tbody>
 								</table>										
 							</div>
 							<div class="card-footer clearfix">
-                                {{ $shippings->links() }}
+                                {{  $internetServices->links() }}
 							</div>
 						</div>
 					</div>
@@ -90,11 +107,11 @@
 
 @section('js')
 <script>
-	function deleteShipping(id){
-		var url = '{{ route("shipping.destroy", "ID") }}';
+	function deleteService(id){
+		var url = '{{ route("internet_services.destroy", "ID") }}';
 		var newUrl = url.replace("ID", id)
 
-		if(confirm("Bạn có chắc chắn muốn xóa giá vận chuyển này")){
+		if(confirm("Bạn có chắc chắn muốn xóa sản phẩm này")){
 				$.ajax({
 				url: newUrl,
 				type: 'delete',
@@ -105,7 +122,7 @@
 				},
 				success: function(response){
 					if(response['status'] == true){
-						 window.location.href  = "{{route('shipping.index')}}";
+						 window.location.href  = "{{route('categories.index')}}";
 				
 					}
 				}
@@ -117,7 +134,7 @@
         $('#myTable').DataTable({
 			"paging": false,
 			"searching": false,
-			"info": true
+			"info": false
 		});
     });
 </script>

@@ -6,7 +6,7 @@
         <div class="container-fluid my-2">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1> Thêm sản phẩm</h1>
+                    <h1> Thêm dịch vụ Internet</h1>
                 </div>
                 <div class="col-sm-6 text-right">
                     <a href="{{ route('products.index')}}" class="btn btn-primary"><i class='bx bx-arrow-back'></i></a>
@@ -25,25 +25,25 @@
                     <div class="card mb-3">
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <div class="mb-3">
-                                        <label for="title">Tên sản phẩm</label>
-                                        <input type="text" name="name" id="name" class="form-control" placeholder="Nhập tên sản phẩm">
+                                        <label for="title">Tên dịch vụ</label>
+                                        <input type="text" name="name" id="name" class="form-control" placeholder="Nhập tên dịch vụ">
                                         <p class="error"></p>	
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <div class="mb-3">
                                         <label for="title">Tên không dấu</label>
                                         <input readonly type="text" name="slug" id="slug" class="form-control" placeholder="slug">
                                         <p class="error"></p>
                                     </div>
                                 </div>
-                                <div class="col-md-12">
+                                <div class="col-md-4">
                                     <div class="mb-3">
-                                        <label for="description">Mô tả</label>
-                                        <textarea name="des" id="des" cols="30" rows="10" class="summernote" placeholder="Nhập mô tả"></textarea>
-                                        <p class="error"></p>
+                                        <label for="price">Giá dịch vụ</label>
+                                        <input type="text" name="price" id="price" class="form-control" placeholder="Giá">
+                                        <p class="error"></p>	
                                     </div>
                                 </div>
                                 <div class="col-md-12">
@@ -52,14 +52,14 @@
                                         <textarea name="short_des" id="short_des" cols="30" rows="10" class="summernote" placeholder="Mô tả ngắn"></textarea>
                                         <p class="error"></p>
                                     </div>
-                                </div>
+                                </div>     
                                 <div class="col-md-12">
                                     <div class="mb-3">
-                                        <label for="shipping_returns">Chính sách giao hàng và hoàn trả</label>
-                                        <textarea name="shipping_returns" id="shipping_returns" cols="30" rows="10" class="summernote" placeholder="shipping_return"></textarea>
+                                        <label for="description">Mô tả</label>
+                                        <textarea name="des" id="des" cols="30" rows="10" class="summernote" placeholder="Nhập mô tả"></textarea>
                                         <p class="error"></p>
                                     </div>
-                                </div>                              
+                                </div>                     
                             </div>
                         </div>	                                  
                     </div>
@@ -76,68 +76,11 @@
                     <div class="row" id="product-gallery">
 
                     </div>
-                    <div class="card mb-3">
-                        <div class="card-body">
-                            <h2 class="h4 mb-3">Giá cả</h2>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                        <label for="price">Giá bán</label>
-                                        <input type="text" name="price" id="price" class="form-control" placeholder="Giá">
-                                        <p class="error"></p>	
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                        <label for="compare_price">Giá giảm</label>
-                                        <input type="text" name="compare_price" id="compare_price" class="form-control" placeholder="Giảm giá nếu có">
-                                        {{-- <p class="text-muted mt-3">
-                                            
-                                        </p>	 --}}
-                                    </div>
-                                </div>                              
-                            </div>
-                        </div>	                                  
-                    </div>
-                    <div class="card mb-3">
-                        <div class="card-body">
-                            <h2 class="h4 mb-3">Hàng tồn kho</h2>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                        <label for="sku">Mã định danh sản phẩm: SKU (Stock Keeping Unit)</label>
-                                        <input type="text" name="sku" id="sku" class="form-control" placeholder="Nhập mã sku">
-                                        <p class="error"></p>	
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                        <label for="barcode">Mã vạch</label>
-                                        <input type="text" name="barcode" id="barcode" class="form-control" placeholder="Nhập mã vạch">	
-                                    </div>
-                                </div>   
-                                <div class="col-md-12">
-                                    <div class="mb-3">
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="hidden" name="track_qty" value="No">
-                                            <input class="custom-control-input" type="checkbox" id="track_qty" name="track_qty" value="Yes" checked>
-                                            <label for="track_qty" class="custom-control-label">Kiểm tra số lượng</label>
-                                            <p class="error"></p>
-                                        </div>
-                                    </div>
-                                    <div class="mb-3">
-                                        <input type="number" min="0" name="qty" id="qty" class="form-control" placeholder="Nhập số lượng">
-                                        <p class="error"></p>	
-                                    </div>
-                                </div>                           
-                            </div>
-                        </div>	                                  
-                    </div>
                 </div>
                 <div class="col-md-4">
                     <div class="card mb-3">
                         <div class="card-body">	
-                            <h2 class="h4 mb-3">Trạng thái sản phẩm</h2>
+                            <h2 class="h4 mb-3">Trạng thái dịch vụ</h2>
                             <div class="mb-3">
                                 <select name="status" id="status" class="form-control">
                                     <option value="1">Còn khinh doanh</option>
@@ -146,19 +89,6 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card mb-3">
-                        <div class="card-body">	
-                            <h2 class="h4 mb-3">Bảo hành</h2>
-                            <div class="mb-3">
-                                <select name="guarantee" id="guarantee" class="form-control">
-                                    <option value="12 tháng">12 tháng</option>
-                                    <option value="24 tháng">24 tháng</option>
-                                    <option value="36 tháng">36 tháng</option>
-                                    <option value="48 tháng">48 tháng</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>  
                     <div class="card">
                         <div class="card-body">	
                             <h2 class="h4  mb-3">Danh mục sản phẩm</h2>
@@ -181,45 +111,7 @@
                                 </select>
                             </div>
                         </div>
-                    </div> 
-                    <div class="card mb-3">
-                        <div class="card-body">	
-                            <h2 class="h4 mb-3">Thương hiệu sản phẩm</h2>
-                            <div class="mb-3">
-                                <select name="brand" id="brand" class="form-control">
-                                    <option value="">Chọn loại sản phẩm</option>
-                                    @if ($brands->isNotEmpty())
-                                       @foreach ($brands as $brand)
-                                       <option value="{{$brand->id}}">{{$brand->name }}</option>
-                                       @endforeach
-                                    @endif
-                                </select>
-                            </div>
-                        </div>
-                    </div> 
-                    <div class="card mb-3">
-                        <div class="card-body">	
-                            <h2 class="h4 mb-3">Sản phẩm nổi bật</h2>
-                            <div class="mb-3">
-                                <select name="is_featured" id="is_featured" class="form-control">
-                                    <option value="No">Không</option>
-                                    <option value="Yes">Có</option>          
-                                </select>
-                                 <p class="error"></p>
-                            </div>
-                        </div>
-                    </div> 
-                    <div class="card mb-3">
-                        <div class="card-body">	
-                            <h2 class="h4 mb-3">Sản phẩm liên quan</h2>
-                            <div class="mb-3">
-                                <select multiple class="related_products w-100" id="related_products" name="related_products[]" class="form-control">
-                                  
-                                </select>
-                                 <p class="error"></p>
-                            </div>
-                        </div>
-                    </div>                               
+                    </div>                       
                 </div>
             </div>
 		

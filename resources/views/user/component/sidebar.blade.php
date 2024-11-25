@@ -9,10 +9,8 @@
               </h2>
               <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                 <div class="accordion-body">
-                    <a href="{{ route('user.profile') }}" class="nav-link font-weight-bold text-dark m-1"><i class="fa-solid fa-file text-primary"></i>  Hồ sơ</a>
-                    <a href="{{ route('user.addressInfo') }}" class="nav-link font-weight-bold text-dark m-1"><i class="fa-solid fa-location-dot text-primary"></i>  Thông tin nhận hàng</a>
+                    <a href="{{ route('user.profile') }}" class="nav-link font-weight-bold text-dark m-1"><i class="fa-solid fa-file text-primary"></i>  Thông tin đăng nhập</a>
                     <a href="{{ route('user.getOrder') }}" class="nav-link font-weight-bold text-dark m-1"><i class="fa-solid fa-receipt text-primary"></i></i> Đơn hàng</a>
-                    <a href="{{ route('user.wishList') }}"  class="nav-link font-weight-bold text-dark m-1"><i class="fas fa-heart text-danger"></i>  Sản phẩm yêu thích</a>
                 </div>
               </div>
             </div>

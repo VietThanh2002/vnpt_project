@@ -40,7 +40,6 @@
             <div class="col-md-7">
                 <div class="right shadow rounded-3" style="background-color: white">
                     <div class="p-3">
-                        <h5 class="m-2">Tên sản phẩm: <span class="fw-bold">{{ $product->name}}</span></h5>
                         <div class="overall-rating mb-3">
                             <div class="d-flex">
                                 <div class="star-rating mt-2 ms-2" title="70%">
@@ -63,32 +62,27 @@
                                 <div class="pt-2 ps-2">({{ ($product->product_ratings_count > 1) ? $product->product_ratings_count : '0'}}) :Lượt đánh giá</div>
                             </div>
                         </div>
+                        <h5 class="m-2">Tên sản phẩm: <span class="fw-bold">{{ $product->name}}</span></h5>
                         <div class="">
                             @if (!empty($product->compare_price))
                                 <span class="h5 m-2 text-underline">Giá sản phẩm: <del class="text-danger fw-bold">{{ formatPriceVND($product->compare_price)}}</del></span>
                                 <span class="h5 m-2"><strong><del class="text-danger text-decoration-line-through">{{  formatPriceVND($product->price) }}</span></strong></span>
                             @else
-                                <span class="h5 m-2">Giá sản phẩm: <strong><span class="text-danger fw-bold">{{  formatPriceVND($product->price) }}</span></strong></span>
+                                <span class="h5 m-2">Giá dịch vụ: <strong><span class="text-danger fw-bold">{{  formatPriceVND($product->price) }}</span></strong> / 1 tháng</span>
                             @endif
                         </div>
                         <div class="h5 m-2" style="text-align: justify;">Mô tả ngắn: <span class="ms-2">{!!$product->short_des!!}</span></div>
-                        <h5 class="h5 m-2">Bảo hành: <span class="fw-bold">{{ $product->guarantee}}</span></h5>
-                        @if ($product->track_qty == 'Yes')
-                            @if ($product->qty > 0)
-                                <h5 class="h5 m-2">Tình trạng: <span class="text-success fw-bold">Còn kinh doanh</span></h5>
-                            @else
-                                <h5 class="h5 m-2">Tình trạng: <span class="text-danger fw-bold">Ngừng kinh doanh</span></h5>
-                            @endif
+                       
+                        @if ($product->status = 1)
+                            <h5 class="h5 m-2">Tình trạng: <span class="text-success fw-bold">Còn kinh doanh</span></h5>
+                        @else
+                            <h5 class="h5 m-2">Tình trạng: <span class="text-danger fw-bold">Ngừng kinh doanh</span></h5>
                         @endif
                         <div class="text-center">
-                            @if ($product->track_qty == 'Yes')
-                                @if ($product->qty > 0)
-                                    <a href="javascript:void(0);" onclick="addService( {{ $product->id }});" class="btn border-info"><span class="text-secondary">Đăng ký dịch vụ</span></a>
-                                @else
-                                    <button disabled class="btn_cart">
-                                        <a href="javascript:void(0);" onclick="addService( {{ $product->id }});" class="fa-solid fa-cart-shopping text-danger"><span class="text-secondary">Đăng ký ngay</span></a>
-                                    </button>
-                                @endif
+                            @if ($product->status = 1)
+                                <a href="javascript:void(0);" onclick="addService( {{ $product->id }});" class="btn border-info"><span class="text-secondary">Đăng ký dịch vụ</span></a>
+                            @else
+                                <a href="javascript:void(0);" class="btn border-danger"><span class="text-secondary">Ngừng kinh doanh</span></a>
                             @endif
                         </div>
                     </div>
@@ -102,9 +96,6 @@
                             <button class="nav-link active" id="description-tab" data-bs-toggle="tab" data-bs-target="#description" type="button" role="tab" aria-controls="description" aria-selected="true">Mô tả chi tiết</button>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="shipping-tab" data-bs-toggle="tab" data-bs-target="#shipping" type="button" role="tab" aria-controls="shipping" aria-selected="false">Chính sách đổi trả và vận chuyển</button>
-                        </li>
-                        <li class="nav-item" role="presentation">
                             <button class="nav-link" id="reviews-tab" data-bs-toggle="tab" data-bs-target="#reviews" type="button" role="tab" aria-controls="reviews" aria-selected="false">Đánh giá dịch vụ</button>
                         </li>
                     </ul>
@@ -112,16 +103,13 @@
                         <div class="tab-pane fade show active" id="description" role="tabpanel" aria-labelledby="description-tab">
                             <p class="m-2 p-2" style="text-align: justify">{!!  $product->des !!}</p>
                         </div>
-                        <div class="tab-pane fade" id="shipping" role="tabpanel" aria-labelledby="shipping-tab">
-                            <p class="m-2 p-2" style="text-align: justify">{{ strip_tags($product->shipping_returns) }}</p>
-                        </div>
 
                         <!-- ratingModal -->
                         <div class="modal fade" id="ratingModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="exampleModalLabel">Cảm ơn bạn đã gửi đánh giá sản phẩm</h1>
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">Cảm ơn bạn đã gửi đánh giá dịch vụ</h1>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">

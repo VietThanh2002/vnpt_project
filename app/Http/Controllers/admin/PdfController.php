@@ -30,19 +30,10 @@ class PdfController extends Controller
                                     ->select('order_details.*', 'products.name AS product_name')
                                     ->get();
 
-        // Lấy thông tin về mã giảm giá
-        $discountAmount = null;
-        $discountCode = $order->discount_code;
-
-        if ($discountCode) {
-            $discount = DiscountCoupon::where('code', $discountCode)->first();
-            $discountAmount = $discount ? $discount->discount_amount : null;
-        }
 
         return view('admin.bill.viewbill', [
             'order' => $order,
             'orderDetails' => $orderDetails,
-            'discountAmount' => $discountAmount,
         ]);
     }
 
@@ -64,19 +55,10 @@ class PdfController extends Controller
                                     ->select('order_details.*', 'products.name AS product_name')
                                     ->get();
 
-        // Lấy thông tin về mã giảm giá
-        $discountAmount = null;
-        $discountCode = $order->discount_code;
-
-        if ($discountCode) {
-            $discount = DiscountCoupon::where('code', $discountCode)->first();
-            $discountAmount = $discount ? $discount->discount_amount : null;
-        }
 
             $data = [
                 'order' => $order,
                 'orderDetails' => $orderDetails,
-                'discountAmount' => $discountAmount
             ];
     
             // Tạo PDF từ view và dữ liệu
