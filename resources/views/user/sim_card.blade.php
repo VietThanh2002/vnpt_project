@@ -100,7 +100,7 @@
                                             @endif
                                         </td>
                                         <td>
-                                            <button onclick="buySim( {{  $simCard->id }} ); " class="btn btn-primary">MUA NGAY</button>
+                                            <button onclick="buySim( {{  $simCard->id }} ); " class="btn btn-sm btn-info">MUA NGAY</button>
                                         </td>
                                     </tr>
                                 @endforeach

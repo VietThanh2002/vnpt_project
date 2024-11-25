@@ -57,7 +57,6 @@
                             <table class="table table-borderless">
                                 <thead>
                                     <tr>
-                                        <td>Hình ảnh</td>
                                         <th>Sản phẩm</th>
                                         <th>Số lượng</th>
                                         <th>Giá </th>
@@ -66,17 +65,6 @@
                                 <tbody>
                                 @if (!empty ($orderDetail))
                                         @foreach ($orderDetail as $item)
-                                            @php
-                                                $productImage =  $item->product->product_images->first();
-                                            @endphp
-                                                <td>
-                                                    <div class="d-flex mb-2">
-                                                        @if (!empty($productImage->image))
-                                                            <img clas="card-img-top" src="{{ asset('/uploads/product/'.$productImage->image) }} " class="img-thumbnail" width="50" > 
-                                                        @else
-                                                            <img clas="card-img-top" src="{{ asset('admin-assets/img/default-150x150.png') }} " class="img-thumbnail" width="50" > 
-                                                        @endif
-                                                    </div>
                                                 </td>
                                                 <td>
                                                     <div class="d-flex mb-2">
@@ -89,24 +77,11 @@
                                                 <td class="text-end">{{  formatPriceVND($item->price) }}</td>
                                             </tr>
                                         @endforeach
-                                @endif
+                                 @endif
                                 </tbody>
                                 <tfoot>
-                                    <tr>
-                                        <td colspan="2">Tạm tính</td>
-                                        <td class="text-end">{{ formatPriceVND($order->subtotal) }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="2">Áp dụng giảm giá</td>
-                                        <td class="text-end">{{ formatPriceVND($discountAmount) }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="2">Phí vận chuyển</td>
-                                        <td class="text-end">{{ formatPriceVND($order->shipping) }}</td>
-                                    </tr>
                                     <tr class="fw-bold">
-                                        <td colspan="2">Tổng</td>
-                                        <td class="text-end">{{ formatPriceVND($order->grand_total) }}</td>
+                                        <td colspan="2">Tổng: <span class="fw-bold">{{ formatPriceVND($order->grand_total) }}</span></td>
                                     </tr>
                                 </tfoot>
                             </table>
@@ -147,23 +122,10 @@
                                             <div class="mb-3">
                                                 <select name="status" id="status" class="form-control">
                                                     <option value="Chờ xử lý" {{ ($order->status == 'Chờ xử lý') ? 'selected' : '' }} >Chờ xử lý</option>
-                                                    <option value="Đang vận chuyển"  {{ ($order->status == 'Đang vận chuyển') ? 'selected' : '' }} >Đang vận chuyển</option>
-                                                    <option value="Đã giao hàng"  {{ ($order->status == 'Đã giao hàng') ? 'selected' : '' }} >Đã giao hàng</option>
+                                                    <option value="Đã xác nhận"  {{ ($order->status == 'Đã xác nhận') ? 'selected' : '' }} >Đã xác nhận</option>
+                                                    <option value="Đã hoàn thành"  {{ ($order->status == 'Đã hoàn thành') ? 'selected' : '' }} >Đã hoàn thành</option>
                                                     <option value="Hủy đơn"  {{ ($order->status == 'Hủy đơn') ? 'selected' : '' }} >Hủy đơn</option>
                                                 </select>
-                                            </div>
-                                            <h2 class="h4 mb-3">Ngày giao hàng dự kiến</h2>
-                                            <div class="mb-3">
-                                                <input type="datetime-local" name="shipped_date" id="shipped_date">
-                                                <p class="mb-lg-0 fs-sm fw-bold">
-                                                    <time datetime="2019-10-01">
-                                                        @if (!empty($order->shipped_date))
-                                                            <p class="m-1">Ngày vận chuyển hiện tại: <strong>{{ \Carbon\Carbon::parse($order->shipped_date)->format('d/m/Y')}}</strong></p>
-                                                        @else
-                                                            <p class="m-1 text-center">Chưa cập nhật</p>
-                                                        @endif
-                                                    </time>
-                                                </p>
                                             </div>
                                             <div class="mb-3">
                                                 <button type="submit" class="btn btn-success">Cập nhật</button>
@@ -171,20 +133,6 @@
                                         </div>
                                     </div>
                                 </form>
-                                    <div class="col-sm-12 col-lg-6">
-                                        <form  method="post" name="sendEmail" id="sendEmail">
-                                            <h2 class="h4 mb-3">Gửi đơn hàng qua email</h2>
-                                            <div class="h4 mb-3">
-                                                <select name="userType" id="userType" class="form-control">
-                                                    <option value="user">Khách hàng</option>
-                                                    <option value="admin">Quản trị viên</option>
-                                                </select>
-                                            </div>
-                                            <div class="mb-3">
-                                                <button class="btn btn-primary">Gửi</button>
-                                            </div>
-                                        </form>
-                                    </div>
                                 </div>
                             </div>
                         </div>

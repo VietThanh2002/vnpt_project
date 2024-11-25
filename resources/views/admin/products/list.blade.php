@@ -8,7 +8,7 @@
 								<h1>Danh sách dịch vụ Internet</h1>
 							</div>
 							<div class="col-sm-6 text-right">
-								<a href="{{ route('products.create') }}" class="btn btn-primary">Thêm sản phẩm</a>
+								<a href="{{ route('products.create') }}" class="btn btn-primary">Thêm dịch vụ</a>
 							</div>
 						</div>
 					</div>
@@ -70,7 +70,7 @@
                                                         <td style= "width: 200px;">{{ $item->name }}</td>
                                                         <td data-order="{{ $item->price}}">{{  formatPriceVND($item->price) }}</td>								
                                                         <td style="text-align: center;">
-                                                            @if (($item->status == 1))
+                                                            @if (($item->status = 1))
 																<div clas="text-center">
 																	<i class="fa-regular fa-circle-check btn btn-success btn-sm"></i>
 																</div>

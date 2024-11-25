@@ -17,20 +17,7 @@
                                         {{ $order->id}}
                                     </p>
                                 </div>
-                                
-                                <div class="col-6 col-lg-3">
-                                    <h6 class="heading-xxxs text-muted">Ngày vận chuyển:</h6>
-                                    <!-- Text -->
-                                    <p class="mb-lg-0 fs-sm fw-bold">
-                                        <time datetime="2019-10-01">
-                                            @if (!empty($order->shipped_date))
-                                                {{ \Carbon\Carbon::parse($order->shipped_date)->format('d/m/Y')}}
-                                            @else
-                                                <p class="m-1 text-center">Chưa cập nhật</p>
-                                            @endif
-                                        </time>
-                                    </p>
-                                </div>
+                            
                                 <div class="col-6 col-lg-3">
                                     <h6 class="heading-xxxs text-muted">Trạng thái đơn hàng:</h6>
                                     <p class="mb-0 fs-sm fw-bold">
@@ -56,56 +43,24 @@
                             <hr>
                             <table class="table table-borderless">
                                 <thead>
-                                    <tr class="">
-                                        <th>Hình ảnh</th>
-                                        <th>Tên sản phẩm</th>
-                                        <th>Số lượng</th>
+                                    <tr class="text-center">
+                                        <th>Dịch vụ</th>
                                         <th>Giá</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                    @if (!empty($orderDetail))
                                         @foreach ($orderDetail as $item)
-                                            @php
-                                                $productImage =  $item->product->product_images->first();
-                                            @endphp
                                             <tr class="text-center">
-                                                <td>
-                                                    <div class="d-flex mb-2">
-                                                        @if (!empty($productImage->image))
-                                                            <img clas="card-img-top" src="{{ asset('/uploads/product/'.$productImage->image) }} " class="img-thumbnail" width="50" > 
-                                                        @else
-                                                            <img clas="card-img-top" src="{{ asset('admin-assets/img/default-150x150.png') }} " class="img-thumbnail" width="50" > 
-                                                        @endif
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div class="flex-lg-grow-1 ms-3">
-                                                        <p class="small mb-0">{{$item->name }}</p>
-                                                    </div>
-                                                </td>
-                                                <td>{{$item->qty}}</td>
-                                                <td class="text-end">{{  formatPriceVND($item->price) }}</td>
+                                                <td class="">{{$item->name }} </td>
+                                                <td class="">{{  formatPriceVND($item->price) }}</td>
                                             </tr>
                                         @endforeach
                                    @endif
                                 </tbody>
                                 <tfoot>
-                                    <tr>
-                                        <td colspan="2">Tổng tiền</td>
-                                        <td class="text-end">{{ formatPriceVND($order->subtotal) }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="2">Áp dụng giảm giá</td>
-                                        <td class="text-end">  {{ formatPriceVND($discountAmount) }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="2">Phí vận chuyển</td>
-                                        <td class="text-end">{{ formatPriceVND($order->shipping) }}</td>
-                                    </tr>
                                     <tr class="fw-bold">
-                                        <td colspan="2">Tổng thanh toán</td>
-                                        <td class="text-end">{{ formatPriceVND($order->grand_total) }}</td>
+                                        <td colspan="1">Tổng thanh toán: <span class="fw-bold">{{ formatPriceVND($order->grand_total) }}</span></td>
                                     </tr>
                                 </tfoot>
                             </table>

@@ -249,40 +249,40 @@ class ProductController extends Controller
         // print_r($tempProduct);
     }
 
-    // public function productRating(Request $request){
+    public function productRating(Request $request){
 
-    //     $ratings = ProductRating::select('product_ratings.*', 'products.name as productName')
-    //                                 ->orderBy('product_ratings.created_at', 'DESC')
-    //                                 ->leftJoin('products', 'products.id', '=', 'product_ratings.product_id');
+        $ratings = ProductRating::select('product_ratings.*', 'products.name as productName')
+                                    ->orderBy('product_ratings.created_at', 'DESC')
+                                    ->leftJoin('products', 'products.id', '=', 'product_ratings.product_id');
 
-    //     if($request->get('keyword') != ""){
-    //         $ratings =  $ratings->orWhere('products.name','like','%'.$request->keyword.'%');
-    //         $ratings =  $ratings->orWhere('product_ratings.user_name','like','%'.$request->keyword.'%');
-    //     }
+        if($request->get('keyword') != ""){
+            $ratings =  $ratings->orWhere('products.name','like','%'.$request->keyword.'%');
+            $ratings =  $ratings->orWhere('product_ratings.user_name','like','%'.$request->keyword.'%');
+        }
 
-    //     $ratings = $ratings->paginate(10);
+        $ratings = $ratings->paginate(10);
 
-    //     // dd($ratings);
-    //     return view('admin.products.ratings',  [
-    //         'ratings' => $ratings
-    //     ]);
-    // }
+        // dd($ratings);
+        return view('admin.products.ratings',  [
+            'ratings' => $ratings
+        ]);
+    }
 
-    // public function changeRatingStatus(Request $request){
+    public function changeRatingStatus(Request $request){
 
-    //     $productRating = ProductRating::find($request->id);
-    //     $productRating->status = $request->status;
-    //     $productRating->save();
+        $productRating = ProductRating::find($request->id);
+        $productRating->status = $request->status;
+        $productRating->save();
 
-    //     session()->flash('success', 'Cập nhật trạng thái đánh giá thành công !');
+        session()->flash('success', 'Cập nhật trạng thái đánh giá thành công !');
 
-    //     return response()->json([
-    //         'status' => true,
-    //         'message' => 'Cập nhật trạng thái đánh giá thành công !'
-    //     ]);
+        return response()->json([
+            'status' => true,
+            'message' => 'Cập nhật trạng thái đánh giá thành công !'
+        ]);
 
 
-    // }
+    }
 
 
 }

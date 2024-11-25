@@ -55,7 +55,11 @@
                                             @foreach ($SellingProductsLastMonth as $item)
                                                 <tr>
                                                     <td>{{ $item->product_id}}</td>
-                                                    <td>{{ $item->name}}</td>
+													@if ($item->name == null)
+														<td>{{ $item->sim_number}}</td>
+													@else
+														<td>{{ $item->name}}</td>
+													@endif
                                                     <td>{{ $item->total_qty}}</td> 
 													<td>{{formatPriceVND($item->price)}}</td> 
 													<td>{{ formatPriceVND(($item->price)*($item->total_qty)) }}</td> 

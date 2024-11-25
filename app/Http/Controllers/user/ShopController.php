@@ -97,18 +97,11 @@ class ShopController extends Controller
                                 ->withCount('product_ratings') // trả về  "product_ratings_count" => 5 // số lượt đánh giá cho 1 sản phẩm 
                                 ->withSum('product_ratings', 'rating') // "product_ratings_sum_rating" => 17.0 //tổng điểm đánh giá
                                 ->with('product_images', 'product_ratings')->first();
+        // dd($product);
 
         // dd($product);
         if($product == null){
             abort(404);
-        }
-
-        // sản phẩm tưởng tự
-        $relatedProducts = [];
-        if($product->related_products != ''){
-            $productArray = explode(',', $product->related_products);
-
-            $relatedProducts = Product::WhereIn('id', $productArray)->where('status', 1)->get();
         }
 
         // Trung bình đánh giá
@@ -118,14 +111,10 @@ class ShopController extends Controller
             $avgRating = number_format(($product->product_ratings_sum_rating/$product->product_ratings_count),2);
             $avgRatingPercent = ( $avgRating * 100)/5;
         }
-
-
         
         $data['avgRating'] =   $avgRating;
         $data['avgRatingPercent'] =   $avgRatingPercent;
-
         $data['product'] = $product;
-        $data['relatedProducts'] =  $relatedProducts;
 
         return view('user.product', $data);
     }
@@ -158,13 +147,13 @@ class ShopController extends Controller
                 ]);
             }
 
-            $productRating = new ProductRating;
+            $productRating = new ProductRating();
             $productRating->product_id = $productId;
             $productRating->user_name = $request->name;
             $productRating->email = $request->email;
             $productRating->rating = $request->rating;
             $productRating->comment = $request->comment;
-            $productRating->status = 0;
+            $productRating->status = 1;
 
             $productRating->save();
 

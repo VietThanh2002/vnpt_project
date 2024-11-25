@@ -22,7 +22,7 @@
                         <div class="card card-outline card-primary shadow h-100 py-2">
                             <div class="card-body">
                                 <div class="row no-gutters align-items-center">
-                                    <div class="col mr-2">
+                                    <div class="mr-2">
                                         <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                             Tổng số khách hàng</div>
                                         <div class="h5 mb-0 font-weight-bold text-gray-800">{{  $totalUser }}</div>
@@ -89,46 +89,10 @@
                         </div>
                     </a>
                 </div>
-                <div class="col-xl-3 col-md-6 mb-4">
-                    <a href="{{ route('products.index') }}" class="text-dark">
-                        <div class="card card-outline card-primary shadow h-100 py-2">
-                            <div class="card-body">
-                                <div class="row no-gutters align-items-center">
-                                    <div class="col mr-2">
-                                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                            Tổng số sản phẩm</div>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $totalProduct }}</div>
-                                    </div>
-                                    <div class="col-auto">
-                                        <i class="fa-solid fa-box-open fa-2x text-gray-300"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-xl-3 col-md-6 mb-4">
-                    <a href="{{ route('orders.getUserVip') }}" class="text-dark">
-                        <div class="card card-outline card-primary shadow h-100 py-2">
-                            <div class="card-body">
-                                <div class="row no-gutters align-items-center">
-                                    <div class="col mr-2">
-                                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                           Khách hàng thân thiết</div>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $usersVipCount }}</div>
-                                    </div>
-                                    <div class="col-auto">
-                                        <i class="fa-solid fa-box-open fa-2x text-gray-300"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
             </div>
             <hr><h2>Thống kê doanh thu</h2><hr>
             <div class="row">
-                <div class="col-xl-3 col-md-6 mb-4">
+                <div class="col-xl-12 col-md-6 mb-4">
                     <div class="card card-outline card-success shadow h-100 py-2">
                         <div class="card-body">
                             <div class="row no-gutters align-items-center">

@@ -79,7 +79,7 @@
             border: 1px solid #fff !important;
         }
         .bg-color {
-            background-color: #777cb3;
+            background-color: #2d3ce2;
             color: #fff;
         }
     </style>
@@ -89,11 +89,9 @@
         <thead>
             <tr>
                 <th width="50%" colspan="2">
-                    <h2 class="text-start">Cửa hàng phụ tùng xe máy VT</h2>
-                    <h4>Địa chỉ: 643/2, ấp Tân Mỹ, xã Tân Phước, huyện Lai Vung, Đồng Tháp</h4>
+                    <h2 class="text-start">VNPT Đồng Tháp</h2>
                 </th>
                 <th width="50%" colspan="2" class="text-end company-data">
-                    <span>{!! QrCode::size(50)->generate($order->id) !!}</span><br>
                     <span>Mã hóa đơn: {{ $order->id }}</span> <br>
                     <span>Thời gian đặt hàng: {{ ($order->created_at)->format('d/m/Y H:i:s') }}</span> <br>
                     @if (!empty($order->notes))
@@ -168,14 +166,6 @@
                     <td width="15%" class="fw-bold">{{ formatPriceVND($item->total) }}</td>
                 </tr>
             @endforeach
-            <tr>
-                <td colspan="4" class="total-heading">Áp dụng giảm giá</td>
-                <td colspan="1" class="total-heading">{{ formatPriceVND($discountAmount) }}</td>
-            </tr>
-            <tr>
-                <td colspan="4" class="total-heading">Phí vận chuyển</td>
-                <td colspan="1" class="total-heading">{{ formatPriceVND($order->shipping) }}</td>
-            </tr>
             <tr>
                 <td colspan="4" class="total-heading">Tổng tiền thanh toán:</td>
                 <td colspan="1" class="total-heading">{{formatPriceVND($order->grand_total)}}</td>

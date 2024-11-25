@@ -81,7 +81,7 @@ class OrderController extends Controller
             'message' => 'Xóa thành công !'
         ]);
     }
-
+    
     public function sendEmailOrder(Request $request, $orderId){
 
         sendEmail($orderId, $request->userType);

@@ -1,4 +1,4 @@
-<aside class="main-sidebar sidebar-dark-white elevation-4" style="background-color:  rgb(56, 93, 202);">
+<aside class="main-sidebar sidebar-dark-white elevation-4" style="background-color:  rgb(87, 121, 221);">
 
     <a href="#" class="brand-link">
         <span class="brand-text fw-bold">VNPT Đồng Tháp</span>
@@ -23,25 +23,25 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a href="{{ route('products.index') }}" class="nav-link">
+                        <p  class="text-white hover">Dịch vụ Internet</p>
+                    </a>
+                </li>	
+                <li class="nav-item">
                     <a href="{{ route('sim-card.index') }}" class="nav-link">
                         <p  class="text-white hover">Sim</p>
                     </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ route('internet_services.index') }}" class="nav-link">
-                        <p  class="text-white hover">Dịch vụ internet</p>
-                    </a>
-                </li>					
+                </li>			
                 <li class="nav-item">
                     <a href="{{ route('orders.index') }}" class="nav-link">
                         <p  class="text-white hover">Đơn hàng</p>
                     </a>
                 </li>
-                {{-- <li class="nav-item">
+                <li class="nav-item">
                     <a href="{{ route('products.productRating') }}" class="nav-link">
                         <p  class="text-white hover">Đánh giá dịch vụ</p>
                     </a>
-                </li> --}}
+                </li>
                 <li class="nav-item">
                     <a href="{{ route('users.index') }}" class="nav-link">
                         <p  class="text-white hover">Khách hàng</p>

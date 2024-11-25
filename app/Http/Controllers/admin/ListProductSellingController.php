@@ -21,12 +21,12 @@ class ListProductSellingController extends Controller
         $today = Carbon::now();   // Ngày hiện tại
 
         // Lấy danh sách sản phẩm bán được theo tuần
-        $SellingProductsWeek = OrderDetail::select('order_details.product_id', 'products.name', 'products.price', DB::raw('SUM(order_details.qty) as total_qty'))
+        $SellingProductsWeek = OrderDetail::select('order_details.product_id', 'products.name', 'products.sim_number', 'products.price', DB::raw('SUM(order_details.qty) as total_qty'))
             ->join('orders', 'order_details.order_id', '=', 'orders.id')
             ->join('products', 'order_details.product_id', '=', 'products.id')
             ->where('orders.status', '!=', 'Hủy đơn')
             ->whereBetween('orders.created_at', [$startOfWeek, $today])
-            ->groupBy('order_details.product_id', 'products.name', 'products.price')
+            ->groupBy('order_details.product_id', 'products.name', 'products.sim_number', 'products.price')
             ->paginate(15);
 
         // Mảng chứa thông tin sản phẩm bán chạy
@@ -45,12 +45,12 @@ class ListProductSellingController extends Controller
         $today = Carbon::now();   // Ngày hiện tại
 
         // Lấy danh sách sản phẩm bán được theo tháng
-        $SellingProductsMonth = OrderDetail::select('order_details.product_id', 'products.name', 'products.price', DB::raw('SUM(order_details.qty) as total_qty'))
+        $SellingProductsMonth = OrderDetail::select('order_details.product_id', 'products.name', 'products.sim_number', 'products.price', DB::raw('SUM(order_details.qty) as total_qty'))
             ->join('orders', 'order_details.order_id', '=', 'orders.id')
             ->join('products', 'order_details.product_id', '=', 'products.id')
             ->where('orders.status', '!=', 'Hủy đơn')
             ->whereBetween('orders.created_at', [$startOfMonth, $today])
-            ->groupBy('order_details.product_id', 'products.name', 'products.price')
+            ->groupBy('order_details.product_id', 'products.name', 'products.sim_number', 'products.price')
             ->paginate(15);
 
         // Mảng chứa thông tin sản phẩm bán chạy
@@ -67,12 +67,12 @@ class ListProductSellingController extends Controller
         $lastMonthEndDate = Carbon::now()->subMonthNoOverflow()->endOfMonth(); // ngày cuối cùng của tháng trước
 
         // Lấy danh sách sản phẩm bán được theo tháng
-        $SellingProductsLastMonth = OrderDetail::select('order_details.product_id', 'products.name', 'products.price', DB::raw('SUM(order_details.qty) as total_qty'))
+        $SellingProductsLastMonth = OrderDetail::select('order_details.product_id', 'products.name', 'products.sim_number', 'products.price', DB::raw('SUM(order_details.qty) as total_qty'))
             ->join('orders', 'order_details.order_id', '=', 'orders.id')
             ->join('products', 'order_details.product_id', '=', 'products.id')
             ->where('orders.status', '!=', 'Hủy đơn')
             ->whereBetween('orders.created_at', [$lastMonthStartDate,  $lastMonthEndDate])
-            ->groupBy('order_details.product_id', 'products.name', 'products.price')
+            ->groupBy('order_details.product_id', 'products.name', 'products.sim_number', 'products.price')
             ->paginate(15);
 
             // dd($SellingProductsLastMonth);
@@ -91,12 +91,12 @@ class ListProductSellingController extends Controller
         $today = Carbon::now();  // Ngày hiện tại
 
         // Lấy danh sách sản phẩm bán được theo tháng
-        $SellingProductsYear = OrderDetail::select('order_details.product_id', 'products.name', 'products.price', DB::raw('SUM(order_details.qty) as total_qty'))
+        $SellingProductsYear = OrderDetail::select('order_details.product_id', 'products.name', 'products.sim_number', 'products.price', DB::raw('SUM(order_details.qty) as total_qty'))
             ->join('orders', 'order_details.order_id', '=', 'orders.id')
             ->join('products', 'order_details.product_id', '=', 'products.id')
             ->where('orders.status', '!=', 'Hủy đơn')
             ->whereBetween('orders.created_at', [$startOfYear, $today])
-            ->groupBy('order_details.product_id', 'products.name', 'products.price')
+            ->groupBy('order_details.product_id', 'products.name', 'products.sim_number', 'products.price')
             ->paginate(15);
 
             // dd($SellingProductsLastMonth);
@@ -157,17 +157,19 @@ class ListProductSellingController extends Controller
         $SellingProductsQuarter4 = $this->getSellingProducts($startOfQuarter4, $endOfQuarter4);
     
         $data['SellingProductsQuarter4'] = $SellingProductsQuarter4;
+
+        // dd($SellingProductsQuarter4);
         
         return view('admin.products_selling_list.products_selling_quarter4_list', $data);
     }
 
     private function getSellingProducts($startDate, $endDate){
-        return OrderDetail::select('order_details.product_id', 'products.name', 'products.price', DB::raw('SUM(order_details.qty) as total_qty'))
+        return OrderDetail::select('order_details.product_id', 'products.name', 'products.sim_number', 'products.price', DB::raw('SUM(order_details.qty) as total_qty'))
                 ->join('orders', 'order_details.order_id', '=', 'orders.id')
                 ->join('products', 'order_details.product_id', '=', 'products.id')
                 ->where('orders.status', '!=', 'Hủy đơn')
                 ->whereBetween('orders.created_at', [$startDate, $endDate])
-                ->groupBy('order_details.product_id', 'products.name', 'products.price')
+                ->groupBy('order_details.product_id', 'products.name', 'products.sim_number', 'products.price')
                 ->paginate(15);
     }
 

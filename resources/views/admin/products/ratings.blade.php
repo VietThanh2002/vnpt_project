@@ -71,7 +71,7 @@
                                                                     </div>
                                                                 </a>
                                                             @else
-                                                                <a href="javascript:void(0);" onclick="changeStatus(1, '{{ $rating->id}}');">
+                                                                <a href="javascript:void(0);" onclick="changeStatus(0, '{{ $rating->id}}');">
                                                                     <div class="">
                                                                         <i class="fa-solid fa-square-xmark text-danger h-6 w-6"></i>
                                                                     </div>
@@ -104,7 +104,7 @@
 		var url = '{{ route("products.destroy", "ID") }}';
 		var newUrl = url.replace("ID", id)
 
-		if(confirm("Bạn có chắc chắn muốn xóa sản phẩm này")){
+		if(confirm("Bạn có chắc chắn muốn xóa dịch vụ này")){
 				$.ajax({
 				url: newUrl,
 				type: 'delete',
@@ -126,7 +126,7 @@
 	};
 
     function changeStatus(status, id){
-        if(confirm("Bạn có chắc chắn muốn xóa bình luận này !")){
+        if(confirm("Bạn có chắc chắn muốn ẩn bình luận này !")){
 				$.ajax({
 				url: '{{ route("products.changeRatingStatus") }}',
 				type: 'post',
@@ -146,8 +146,6 @@
 			});
 		}
     }
-
-
 	$(document).ready( function () {
         $('#myTable').DataTable({
 			"paging": false,

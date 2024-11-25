@@ -37,7 +37,7 @@ class SimCardController extends Controller
             'sim_number' => [
                 'required',
                 'regex:/^(091|094|088|081|082|083|084|085)\d{7}$/',
-                'unique:sim_cards,sim_number', // Kiểm tra số SIM đã tồn tại
+                'unique:products,sim_number', // Kiểm tra số SIM đã tồn tại
             ],
             'price' => 'required|numeric',
             'sim_type' => 'required',
@@ -81,7 +81,9 @@ class SimCardController extends Controller
 
     public function edit($id)
     {
-        $simCard = Product::find($id)->where('type', 'Dịch vụ di động')->first();
+        $simCard = Product::find($id);
+
+        // dd($simCard);
 
         $categories = Category::where('status', 1)->get();
 
@@ -96,7 +98,7 @@ class SimCardController extends Controller
             'sim_number' => [
                 'required',
                 'regex:/^(091|094|088|081|082|083|084|085)\d{7}$/',
-                'unique:sim_cards,sim_number,'.$id.',id', // Kiểm tra số SIM đã tồn tại
+                'unique:products,sim_number,'.$id.',id', // Kiểm tra số SIM đã tồn tại
             ],
             'price' => 'required|numeric',
             'sim_type' => 'required',

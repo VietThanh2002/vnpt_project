@@ -44,7 +44,7 @@
 									<thead>
 										<tr class="text-center">
 											<th width="10%">Mã SP</th>
-											<th width="30%">Tên sản phẩm</th>
+											<th width="30%">Tên sản phẩm/Dịch vụ</th>
 											<th width="20%">Số lượng bán ra</th>
 											<th with="20%">Giá bán</th>
 											<th with="20%">Tổng</th>
@@ -55,7 +55,11 @@
                                             @foreach ($SellingProductsQuarter4 as $item)
 												<tr>
 													<td>{{ $item->product_id}}</td>
-													<td>{{ $item->name}}</td>
+													@if ($item->name == null)
+														<td>{{ $item->sim_number}}</td>
+													@else
+														<td>{{ $item->name}}</td>
+													@endif
 													<td>{{ $item->total_qty}}</td> 
 													<td>{{formatPriceVND($item->price)}}</td> 
 													<td>{{ formatPriceVND(($item->price)*($item->total_qty)) }}</td> 

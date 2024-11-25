@@ -6,7 +6,7 @@
         <div class="light-font">
             <ol class="breadcrumb primary-color mb-0">
                 <li class="breadcrumb-item"><a class="text-dark" href="{{ route('user.home')}}">Trang chủ</a></li>
-                <li class="breadcrumb-item"><a class="text-dark" href="{{ route('user.shop') }}">Sản phẩm</a></li> 
+                <li class="breadcrumb-item"><a class="text-dark" href="{{ route('user.shop') }}">Dịch vụ</a></li> 
                 <li class="breadcrumb-item">{{ $product->name}}</li>
             </ol>
         </div>
@@ -59,10 +59,10 @@
                                         </div>
                                     </div>
                                 </div>  
-                                <div class="pt-2 ps-2">({{ ($product->product_ratings_count > 1) ? $product->product_ratings_count : '0'}}) :Lượt đánh giá</div>
+                                <div class="pt-2 ps-2">({{ ($product->product_ratings_count >= 1) ? $product->product_ratings_count : '0'}}) :Lượt đánh giá</div>
                             </div>
                         </div>
-                        <h5 class="m-2">Tên sản phẩm: <span class="fw-bold">{{ $product->name}}</span></h5>
+                        <h5 class="m-2">Tên dịch vụ: <span class="fw-bold">{{ $product->name}}</span></h5>
                         <div class="">
                             @if (!empty($product->compare_price))
                                 <span class="h5 m-2 text-underline">Giá sản phẩm: <del class="text-danger fw-bold">{{ formatPriceVND($product->compare_price)}}</del></span>
@@ -184,41 +184,43 @@
                                                 </div>
                                             </div>
                                         </div>  
-                                        <div class="pt-2 ps-2">({{ ($product->product_ratings_count > 1) ? $product->product_ratings_count : '0'}}) :Lượt đánh giá</div>
+                                        <div class="pt-2 ps-2">({{ ($product->product_ratings_count >= 1) ? $product->product_ratings_count : '0'}}) :Lượt đánh giá</div>
                                     </div>
                                     
                                 </div>
-                                @if (!empty($product->product_ratings))
-                                    @foreach ($product->product_ratings as $rating)
-                                        <div class="rating-group mb-4">
-                                            <span> <strong>{{ $rating->user_name }}</strong></span>
-                                            @php
-                                                $ratingPercent = ($rating->rating*100)/5;  //1 sao= 20%
-                                            @endphp
-                                            <div class="star-rating mt-2" title="70%">
-                                                <div class="back-stars">
-                                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                                    
-                                                    <div class="front-stars" style="width: {{  $ratingPercent }}%">
+                                <div class="ms-5">
+                                    @if (!empty($product->product_ratings))
+                                        @foreach ($product->product_ratings as $rating)
+                                            <div class="rating-group mb-4">
+                                                <span> <strong>{{ $rating->user_name }}</strong></span>
+                                                @php
+                                                    $ratingPercent = ($rating->rating*100)/5;  //1 sao= 20%
+                                                @endphp
+                                                <div class="star-rating mt-2" title="70%">
+                                                    <div class="back-stars">
                                                         <i class="fa fa-star" aria-hidden="true"></i>
                                                         <i class="fa fa-star" aria-hidden="true"></i>
                                                         <i class="fa fa-star" aria-hidden="true"></i>
                                                         <i class="fa fa-star" aria-hidden="true"></i>
                                                         <i class="fa fa-star" aria-hidden="true"></i>
+                                                        
+                                                        <div class="front-stars" style="width: {{  $ratingPercent }}%">
+                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                        </div>
                                                     </div>
+                                                </div>   
+                                                <div class="my-3">
+                                                    <p>{{ $rating->comment }}
+                                                </p>
                                                 </div>
-                                            </div>   
-                                            <div class="my-3">
-                                                <p>{{ $rating->comment }}
-                                            </p>
                                             </div>
-                                        </div>
-                                    @endforeach
-                                @endif
+                                        @endforeach
+                                    @endif
+                                </div>
                             </div>
                         </div>
                     </div>

@@ -18,7 +18,6 @@ use App\Http\Controllers\admin\OrderController;
 use App\Http\Controllers\admin\PdfController;
 use App\Http\Controllers\admin\ChangePassWordController;
 use App\Http\Controllers\admin\ListProductSellingController;
-use App\Http\Controllers\admin\StaffsManagerController;
 
 //User
 use App\Http\Controllers\user\AuthController;
@@ -65,8 +64,6 @@ Route::delete('/delete-item', [CartController::class, 'deleteItem'])->name('user
 //Checkout
 Route::get('/checkout', [CartController::class, 'checkout'])->name('user.checkout');
 Route::post('/process-checkout', [CartController::class, 'processCheckout'])->name('user.processCheckout');
-Route::get('/payment-online', [PaymentOnlineController::class, 'vnpay_payment'])->name('user.payment');
-
 
 //applyDiscount 
 Route::post('/apply-discount', [CartController::class, 'applyDiscount'])->name('user.applyDiscount');
@@ -99,23 +96,13 @@ Route::group(['prefix'=> '/'], function(){
 
     Route::group(['middleware' => 'auth'], function(){
         Route::get('/profile', [AuthController::class, 'profile'])->name('user.profile');
-        Route::get('/address-info', [AuthController::class, 'addressInfo'])->name('user.addressInfo');
         Route::get('/orders', [AuthController::class, 'getOrder'])->name('user.getOrder');
         Route::get('/order-detail/{orderId}', [AuthController::class, 'getOrderDetail'])->name('user.getOrderDetail');
         Route::post('/order-cancel/{order}', [AuthController::class, 'cancelOrder'])->name('user.cancelOrder');
-        Route::get('/wishlists', [AuthController::class, 'wishList'])->name('user.wishList');
         Route::get('/change-password-form', [AuthController::class, 'changePassWordForm'])->name('user.changePassWordForm');
         Route::post('/change-password', [AuthController::class, 'changePassWord'])->name('user.changePassWord');
         Route::put('/update-profile/{userId}', [AuthController::class, 'updateProfile'])->name('user.updateProfile');
-        Route::put('/update-delivery-address', [AuthController::class, 'updateUserAddress'])->name('user.updateUserAddress');
-        Route::delete('/remove-product-wishlist', [AuthController::class, 'removeProductWishList'])->name('user.removeWishList');
         Route::get('/logout', [AuthController::class, 'logout'])->name('user.logout');
-        
-        // Route::get('/checkout', [CartController::class, 'checkout'])->name('user.checkout');
-        // Route::post('/process-checkout', [CartController::class, 'processCheckout'])->name('user.processCheckout');
-        // Route::get('/thanks/{orderId}', [CartController::class, 'thank'])->name('user.success_order');
-
-      
     });
 
 });
@@ -199,8 +186,8 @@ Route::group(['prefix'=> 'admin'], function(){
         Route::get('/get-products', [ProductController::class, 'getProducts'])->name('products.getProducts');
         Route::delete('/product-images', [ProductImageController::class, 'destroy'])->name('product-images.destroy');
         Route::get('/product-subcategories', [ProductSubCategoryController::class, 'index'])->name('product-subcategories.index');
-        // Route::get('/ratings-products', [ProductController::class, 'productRating'])->name('products.productRating');
-        // Route::post('/change-rating-status', [ProductController::class, 'changeRatingStatus'])->name('products.changeRatingStatus');
+        Route::get('/ratings-products', [ProductController::class, 'productRating'])->name('products.productRating');
+        Route::post('/change-rating-status', [ProductController::class, 'changeRatingStatus'])->name('products.changeRatingStatus');
 
         // Sim card
         Route::get('/sim-card', [SimCardController::class, 'index'])->name('sim-card.index');
@@ -217,19 +204,8 @@ Route::group(['prefix'=> 'admin'], function(){
         Route::post('/orders/send-email/{id}', [OrderController::class, 'sendEmailOrder'])->name('orders.sendEmailOrder');
         Route::delete('/orders/{id}', [OrderController::class, 'destroy'])->name('orders.destroy');
 
-        // Route::put('/orders/update-status/{id}', [OrderController::class, 'updateOrderStatusQR'])->name('orders.updateOrderStatusQR');
-        // Route::get('/successful-delivery-/{orderId}', [OrderController::class, 'successful'])->name('orders.successful-delivery');
-
         //users
         Route::get('/users', [UserListController::class, 'index'])->name('users.index');
-
-        //staff
-        Route::get('/staffs', [StaffsManagerController::class, 'index'])->name('staffs.index');
-        Route::get('/staffs/create', [StaffsManagerController::class, 'create'])->name('staffs.create');
-        Route::post('/staffs', [StaffsManagerController::class, 'store'])->name('staffs.store');
-        Route::get('/staffs/{id}/edit', [StaffsManagerController::class, 'edit'])->name('staffs.edit');
-        Route::put('/staffs/{id}', [StaffsManagerController::class, 'update'])->name('staffs.update');
-        Route::delete('/staffs/{id}', [StaffsManagerController::class, 'destroy'])->name('staffs.destroy');
        
         // Export PDF
         Route::get('invoice/{orderId}', [PdfController::class, 'index']);

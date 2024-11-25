@@ -31,7 +31,7 @@
             <div class="nav-icon">
                 <div class="search_click">
                     <form class="form-search" action="{{ route('user.shop')}}" method="get">
-                        <input name="search" id="search" value="{{ Request::get('search') }}" class="search__input" type="text" name="search" placeholder="  Nhập tên sản phẩm">
+                        <input name="search" id="search" value="{{ Request::get('search') }}" class="search__input" type="text" name="search" placeholder="  Nhập tên dịch vụ">
                         <button type="submit" class='btn bx bx-search'></button>
                     </form>
                 </div>
@@ -70,9 +70,6 @@
                                 <a class="nav-link fw-bold" href="{{ route('user.simSo')}}">Sim số</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link fw-bold" href="#">Tin tức</a>
-                            </li>
-                            <li class="nav-item">
                                 <a class="nav-link fw-bold" href="{{ route('user.contact')}}">Liên hệ</a>
                             </li>
                         </ul>      			
@@ -96,7 +93,6 @@
                                 <i class='bx bx-cart-alt'></i>
                                 <span class="cart-quantity">( {{ Cart::count() }} )</span>
                             </a> --}}
-                
                         </div>
                     </div> 		
                 </nav>
