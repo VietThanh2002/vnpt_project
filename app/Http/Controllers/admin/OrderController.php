@@ -51,8 +51,8 @@ class OrderController extends Controller
 
     public function changeOrderStatus(Request  $request, $orderId){
         $order = Order::find($orderId);
+        
         $order->status = $request->status;
-        $order->shipped_date = $request->shipped_date;
 
         $order->save();
 

@@ -37,10 +37,10 @@
                                     <p class="mb-0 fs-sm fw-bold">
                                         @if ($order->status == 'Chờ xử lý')  
                                             <span class="badge bg-danger">Chờ xử lý</span>
-                                        @elseif($order->status == 'Đang vận chuyển') 
-                                            <span class="badge bg-info">Đang vận chuyển</span>
-                                        @elseif($order->status == 'Đã giao hàng') 
-                                            <span class="badge bg-success">Đã giao hàng</span>
+                                        @elseif($order->status == 'Đã xác nhận') 
+                                            <span class="badge bg-info">Đã xác nhận</span>
+                                        @elseif($order->status == 'Đã hoàn thành') 
+                                            <span class="badge bg-success">Đã hoàn thành</span>
                                         @else
                                             <span class="badge bg-danger">Đã hủy</span>
                                         @endif
@@ -121,10 +121,10 @@
                                             <h2 class="h4 mb-3">Trạng thái đơn hàng</h2>
                                             <div class="mb-3">
                                                 <select name="status" id="status" class="form-control">
-                                                    <option value="Chờ xử lý" {{ ($order->status == 'Chờ xử lý') ? 'selected' : '' }} >Chờ xử lý</option>
-                                                    <option value="Đã xác nhận"  {{ ($order->status == 'Đã xác nhận') ? 'selected' : '' }} >Đã xác nhận</option>
-                                                    <option value="Đã hoàn thành"  {{ ($order->status == 'Đã hoàn thành') ? 'selected' : '' }} >Đã hoàn thành</option>
-                                                    <option value="Hủy đơn"  {{ ($order->status == 'Hủy đơn') ? 'selected' : '' }} >Hủy đơn</option>
+                                                    <option value="Chờ xử lý" @selected($order->status == 'Chờ xử lý')>Chờ xử lý</option>
+                                                    <option value="Đã xác nhận" @selected($order->status == 'Đã xác nhận')>Đã xác nhận</option>
+                                                    <option value="Đã hoàn thành" @selected($order->status == 'Đã hoàn thành')>Đã hoàn thành</option>
+                                                    <option value="Hủy đơn" @selected($order->status == 'Hủy đơn')>Hủy đơn</option>                                                    
                                                 </select>
                                             </div>
                                             <div class="mb-3">

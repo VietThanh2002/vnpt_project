@@ -67,9 +67,9 @@
                                                     <td>{{ $item->phone_number}}</td>
                                                     <td>
                                                         @if ($item->status == 'Chờ xử lý')  
-                                                            <span class="badge bg-primary">Chờ xử lý</span>
-                                                        @elseif($item->status == 'Đã xác nhận') 
-                                                            <span class="badge bg-info">Đã xác nhận</span>
+															<span class="badge bg-danger">Chờ xử lý</span>
+														@elseif($item->status == 'Đã xác nhận') 
+															<span class="badge bg-info">Đã xác nhận</span>
 														@elseif($item->status == 'Đã hoàn thành') 
 															<span class="badge bg-success">Đã hoàn thành</span>
 														@else
